@@ -1,0 +1,8 @@
+# -*- coding: utf8 -*-
+
+saludo = "Hola"
+despedida = "Chao"
+mensaje = u"""Este es un mensaje
+en varias líneas
+de texto
+"""
