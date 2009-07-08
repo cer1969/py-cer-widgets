@@ -6,8 +6,6 @@ import wx
 from cer.widgets import cw
 import cer.widgets.propeditor as pe
 
-import datetime
-
 #-----------------------------------------------------------------------------------------
 
 class Cuenta(object):

@@ -2,7 +2,6 @@
 # CRISTIAN ECHEVERRÍA RABÍ 
 
 import wx
-from cer.widgets import cw
 import cer.widgets.listctrl as lc
 import datetime
 

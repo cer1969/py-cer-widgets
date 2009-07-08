@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-import wx
-
 #-----------------------------------------------------------------------------------------
 
 __all__ = ['DataManager', 'RowDataManager', 'ObjDataManager']

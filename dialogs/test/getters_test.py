@@ -4,9 +4,6 @@
 from __future__ import division
 import wx
 from cer.widgets import cw
-from cer.utils.validators import (CerTextValidator, CerIntValidator, CerFloatValidator,
-                                  CerDateTimeValidator, CerDateValidator,
-                                  CerTimeValidator)
 
 #-----------------------------------------------------------------------------------------
 

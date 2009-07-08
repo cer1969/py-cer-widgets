@@ -2,7 +2,6 @@
 # CRISTIAN ECHEVERRÍA RABÍ  
 
 import wx
-from cer.widgets import cw
 #from cer.widgets.resource.rxwx import resman
 #from cer.widgets.resource.rxjava import resman
 from cer.widgets.resource.rxnuvola import resman
