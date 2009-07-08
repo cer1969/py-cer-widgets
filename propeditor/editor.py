@@ -18,6 +18,9 @@ class _NodeData(object):
         self.Edit = i.Edit
 
 #-----------------------------------------------------------------------------------------
+# Considerar el siguiente cambio:
+# import  wx.lib.newevent
+# myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
 myEVTC_PREDIT_VALCHANGE = wx.NewEventType()
 EVTC_PREDIT_VALCHANGE = wx.PyEventBinder(myEVTC_PREDIT_VALCHANGE, 1)
