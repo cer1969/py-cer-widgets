@@ -2,7 +2,6 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
 from __future__ import division
-import wx
 import wx.grid as grid
 
 #-----------------------------------------------------------------------------------------

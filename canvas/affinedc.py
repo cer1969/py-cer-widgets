@@ -36,7 +36,7 @@ class AffineDC(AffineMatrix):
     
     def DrawPointList(self, points, pens=None):
         ppoints = [self.getPoint(*x) for x in points]
-        self.dc.DrawPointList(points, pens)
+        self.dc.DrawPointList(ppoints, pens)
     
     def DrawLine(self, x1, y1, x2, y2):
         px1, py1 = self.getPoint(x1, y1)
