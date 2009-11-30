@@ -3,12 +3,12 @@
 # Archivo      : ClipboardTest
 # Fecha        : 29-08-2006 11:44:36 
 
-from cer.gui import cg
+from cer.widgets import cw
 import wx
 
 #-----------------------------------------------------------------------------------------
 
 if not wx.GetApp():
     app = wx.PySimpleApp()
-print cg.Clipboard.GetFloatTable(repList=[(".",""),(",",".")])
+print cw.Clipboard.GetFloatTable(repList=[(".",""),(",",".")])
 print "Hola"
