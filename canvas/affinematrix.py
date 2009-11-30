@@ -137,7 +137,7 @@ class AffineMatrix(object):
         di =  a/(a*d - b*c)
         txi = (ty*b - tx*d)/(a*d - b*c)
         tyi = (tx*c - ty*a)/(a*d - b*c)
-        return Affine(ai, bi, ci, di, txi, tyi)
+        return AffineMatrix(ai, bi, ci, di, txi, tyi)
 
     #-------------------------------------------------------------------------------------
     # State method (stack with states)
