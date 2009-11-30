@@ -35,7 +35,7 @@ class myEvent(wx.PyCommandEvent):
 #-----------------------------------------------------------------------------------------
 
 PREDIT_DEF_STYLE = (wx.TR_DEFAULT_STYLE | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
-                    wx.TR_HIDE_ROOT | wx.TR_COLUMN_LINES | wx.TR_ROW_LINES) 
+                    wx.TR_HIDE_ROOT | gizmos.TR_COLUMN_LINES | wx.TR_ROW_LINES) 
 
 class Editor(gizmos.TreeListCtrl):
     """ Widget to display and edit properties
