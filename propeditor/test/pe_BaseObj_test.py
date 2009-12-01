@@ -98,7 +98,7 @@ class MainFrame(wx.Frame):
         ctrl = event.Ctrl
         name = event.Item.Name
         print "Cambia valor de la propiedad %s" % name
-        print ctrl.Obj.__dict__
+        print ctrl.Obj
         if name == "Peso":
             ctrl.SetEdit(ctrl.Data[2][1], False)
             #ctrl.SetEdit(ctrl.Data[2], False)
