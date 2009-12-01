@@ -7,10 +7,23 @@ __all__ = ['BaseObj', 'EditorGroup', 'EditorData']
 
 #-----------------------------------------------------------------------------------------
 
-class BaseObj(object):
+#class BaseObj(object):
+#    def __init__(self, names):
+#        for i in names:
+#            setattr(self, i, None)
+
+class BaseObj(dict):
+    
     def __init__(self, names):
+        dict.__init__(self)
         for i in names:
-            setattr(self, i, None)
+            self[i] = None
+    
+    def __getattr__(self, name):
+        return self[name]
+
+    def __setattr__(self, name, value):
+        self[name] = value
 
 #-----------------------------------------------------------------------------------------
 
