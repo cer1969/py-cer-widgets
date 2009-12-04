@@ -29,8 +29,8 @@ class Grid(grid.Grid):
     # datamodel: Objeto cg.GridDataModel
     # size: Size de la grid
     def __init__(self, parent, datamodel, size=(300,300)):
-        grid.Grid.__init__(self,parent,-1,size=size,style=wx.SUNKEN_BORDER)
-
+        grid.Grid.__init__(self, parent, -1, size=size, style=wx.SUNKEN_BORDER)
+        
         self._nrows = 0
         self._ncols = 0
         self.DataModel = datamodel
@@ -41,8 +41,8 @@ class Grid(grid.Grid):
         f = self.GetDefaultCellFont()
         self.SetLabelFont(f)
         
-        self.SetRowLabelAlignment(wx.CENTER,wx.CENTER)
-        self.SetColLabelAlignment(wx.CENTER,wx.CENTER)
+        self.SetRowLabelAlignment(wx.CENTER, wx.CENTER)
+        self.SetColLabelAlignment(wx.CENTER, wx.CENTER)
         self.SetGridLineColour("GRAY80")
         
         self.SetMargins(0,0)
@@ -53,56 +53,56 @@ class Grid(grid.Grid):
         
         grid.EVT_GRID_CELL_LEFT_DCLICK(self, self.OnLeftDClick)
         wx.EVT_KEY_DOWN(self, self.OnKeyDown)
-
+    
     #-------------------------------------------------------------------------------------
     # Propiedad DataModel
     def GetDataModel(self):
         return self.GetTable()
-
-    def SetDataModel(self,datamodel): 
+    
+    def SetDataModel(self, datamodel): 
         # The second parameter means that the grid is to take ownership of the
         # table and will destroy it when done.  Otherwise you would need to keep
         # a reference to it and call it's Destroy method later.
-        self.SetTable(datamodel,True)
+        self.SetTable(datamodel, True)
         self._nrows = datamodel.GetNumberRows()
         self._ncols = datamodel.GetNumberCols()
-
-    DataModel = property(GetDataModel,SetDataModel)
-
+    
+    DataModel = property(GetDataModel, SetDataModel)
+    
     #-------------------------------------------------------------------------------------
     
     def SetRowLabelWidthInChars(self, nchars, dpixels=6):
-        w,h,d,e = self.GetFullTextExtent(nchars*"0",self.GetLabelFont())
+        w,h,d,e = self.GetFullTextExtent(nchars*"0", self.GetLabelFont())
         self.SetRowLabelSize(w+dpixels)
-
+    
     def SetColLabelHeightInChars(self, nchars, dpixels=4):
-        w,h,d,e = self.GetFullTextExtent("0",self.GetLabelFont())
+        w,h,d,e = self.GetFullTextExtent("0", self.GetLabelFont())
         self.SetColLabelSize(nchars*h+dpixels+d+e+dpixels)
-
+    
     def SetColWidthInChars(self, col, nchars, dpixels=6):
-        w,h,d,e = self.GetFullTextExtent(nchars*"0",self.GetDefaultCellFont())
-        self.SetColSize(col,w+dpixels)
+        w,h,d,e = self.GetFullTextExtent(nchars*"0", self.GetDefaultCellFont())
+        self.SetColSize(col, w+dpixels)
     
     def GetColWidthInChars(self, col, dpixels=6):
         wc = self.GetColSize(col) - dpixels
-        w,h,d,e = self.GetFullTextExtent("0",self.GetDefaultCellFont())
-        return round(wc/w,0)
+        w,h,d,e = self.GetFullTextExtent("0", self.GetDefaultCellFont())
+        return round(wc/w, 0)
     
     #def SetDefaultColSizeInChars(self,nchars):
-    #    w,h,d,e = self.GetFullTextExtent(nchars*"0",self.GetDefaultCellFont())
-    #    self.SetDefaultColSize(w+5,True)
+    #    w,h,d,e = self.GetFullTextExtent(nchars*"0", self.GetDefaultCellFont())
+    #    self.SetDefaultColSize(w+5, True)
     
     #-------------------------------------------------------------------------------------
     
     def OnKeyDown(self, evt):
-        if evt.KeyCode not in (wx.WXK_RETURN,wx.WXK_NUMPAD_ENTER):
+        if evt.KeyCode not in (wx.WXK_RETURN, wx.WXK_NUMPAD_ENTER):
             evt.Skip()
             return
-
+        
         if evt.ControlDown():   # the edit control needs this key
             evt.Skip()
             return
-
+        
         self.DisableCellEditControl()
         
         if self.EnterMove == ENTER_MOVE_RIGHT:
@@ -123,7 +123,7 @@ class Grid(grid.Grid):
             self.MakeCellVisible(row, col)
             if self.EnterMove == ENTER_MOVE_NEXTEDIT:
                 self.MoveToNextEditableCell()
-
+    
     def MoveToRightCell(self):
         success = self.MoveCursorRight(False)
         if success:
@@ -134,7 +134,7 @@ class Grid(grid.Grid):
             self.MakeCellVisible(row, 0)
             return True
         return False
-        
+    
     def MoveToNextEditableCell(self):
         row = self.GetGridCursorRow()
         col = self.GetGridCursorCol()
@@ -146,34 +146,34 @@ class Grid(grid.Grid):
                 row = row + 1
                 if row > (self.DataModel.GetNumberRows() - 1):
                     return False
-            if self.IsReadOnly(row,col)==False:
-                self.SetGridCursor(row,col)
-                self.MakeCellVisible(row,col)
+            if self.IsReadOnly(row, col) == False:
+                self.SetGridCursor(row, col)
+                self.MakeCellVisible(row, col)
                 flag = False
         return True
-
+    
     #-------------------------------------------------------------------------------------
     # I do this because I don't like the default behaviour of not starting the
     # cell editor on double clicks, but only a second click.
     def OnLeftDClick(self, evt):
         if self.CanEnableCellControl():
             self.EnableCellEditControl()
-
+    
     #-------------------------------------------------------------------------------------
     # Sobre-escribiendo métodos
     
-    def AppendRows(self,numRows=1):
-        op = grid.Grid.AppendRows(self,numRows)
+    def AppendRows(self, numRows=1):
+        op = grid.Grid.AppendRows(self, numRows)
         self.UpdateRowsView()
         return op
-
-    def DeleteRows(self,pos=0,numRows=1):
-        op = grid.Grid.DeleteRows(self,pos,numRows)
+    
+    def DeleteRows(self, pos=0, numRows=1):
+        op = grid.Grid.DeleteRows(self, pos, numRows)
         self.UpdateRowsView()
         return op
-
-    def InsertRows(self,pos=0,numRows=1):
-        op = grid.Grid.InsertRows(self,pos,numRows)
+    
+    def InsertRows(self, pos=0, numRows=1):
+        op = grid.Grid.InsertRows(self, pos, numRows)
         self.UpdateRowsView()
         return op
     
@@ -218,32 +218,32 @@ class Grid(grid.Grid):
         self.ProcessTableMessage(msg)
         self._nrows = rnnew
     
-    def AppendRowsData(self,data):
+    def AppendRowsData(self, data):
         self.DataModel.AppendRowsData(data)
         self.UpdateRowsView()
-        
-    def InsertRowsData(self,pos,data):
-        self.DataModel.InsertRowsData(pos,data)
+    
+    def InsertRowsData(self, pos, data):
+        self.DataModel.InsertRowsData(pos, data)
         self.UpdateRowsView()
-
+    
     def InsertSelectedRows(self):
         filas = self.GetSelectedRows()
         numRows = len(filas)
         if numRows == 0: return 
         pos = filas[0]
-        self.InsertRows(pos,numRows)
-        
+        self.InsertRows(pos, numRows)
+    
     def DeleteSelectedRows(self):
         filas = self.GetSelectedRows()
         numRows = len(filas)
         if numRows == 0: return
         pos = filas[0]
-        self.DeleteRows(pos,numRows)
-
-    def ReplaceData(self,data):
+        self.DeleteRows(pos, numRows)
+    
+    def ReplaceData(self, data):
         self.DataModel.Data = data
         self.UpdateRowsView()
         self.UpdateColsView()
-
+    
     def ValidateData(self):
         return self.DataModel.ValidateData()
