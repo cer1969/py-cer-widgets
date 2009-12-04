@@ -125,9 +125,9 @@ class DataModel(grid.PyGridTableBase):
 
 class TableDataModel(DataModel):
     
-    def __init__(self, headers=[]):
+    def __init__(self, *headers):
         DataModel.__init__(self)
-        self.Headers = headers
+        self.Headers = list(headers)
         self.__data = []
     
     #-------------------------------------------------------------------------------------
@@ -198,11 +198,7 @@ class TableDataModel(DataModel):
     
     def InsertRowsData(self, pos, data):
         data = self.GetCheckedData(data)
-        #numRows = len(data)
         self.__data[pos:pos] = data
-        #data.reverse()
-        #for i in data:
-        #    self.__data.insert(pos,i)
     
     def GetCheckedData(self, data):
         ncols = self.GetNumberCols()
