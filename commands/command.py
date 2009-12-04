@@ -60,8 +60,8 @@ class Command(object):
         self.Args = args
         self.Type = type
         self.Sub = sub
-        self.Id = None
-
+        self.Id = wx.NewId()
+    
     def CreateMenu(self, menu):
         if self.Type == CMD_SUB:
             m = self.Sub.Make()
@@ -94,22 +94,21 @@ class Command(object):
 #-----------------------------------------------------------------------------------------
 
 class CommandList(list):
-
+    
     def _cmd(self, text, method, bmp="", help="", bmp2="", args = None, type=CMD_ITEM):
         cmd = Command(text, method, bmp, help, bmp2, args, type)
-        cmd.Id = wx.NewId()
         self.append(cmd)
         return cmd
-        
+    
     def Item(self, text, method, bmp="", help="", bmp2="", args = None):
         return self._cmd(text, method, bmp, help, bmp2, args, CMD_ITEM)
-        
+    
     def Check(self, text, method, bmp="", help="", bmp2="", args = None):
         return self._cmd(text, method, bmp, help, bmp2, args, CMD_CHECK)
-        
+    
     def Radio(self, text, method, bmp="", help="", bmp2="", args = None):
         return self._cmd(text, method, bmp, help, bmp2, args, CMD_RADIO)
-        
+    
     def Sub(self, sub, bmp="", help=""):
         cmd = Command("", bmp=bmp, help=help, type=CMD_SUB, sub=sub)
         return cmd
@@ -120,4 +119,3 @@ class CommandList(list):
             methodOwner = parent
         for tool in self:
             parent.Bind(wx.EVT_MENU, getattr(methodOwner, tool.Method), id=tool.Id)
-        
