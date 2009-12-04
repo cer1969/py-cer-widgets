@@ -29,14 +29,13 @@ tbd = cw.ToolBar(None, None, cmd_addr, cmd_insr, cmd_delr, cmd_past, cmd_lins)
 #-----------------------------------------------------------------------------------------
 # Definición del DataModel para usar con el grid
 
-dam = grid.TableDataModel()
-dam.Headers = [
+dam = grid.TableDataModel(
     grid.Text(u"Nombre", u"Nuevo"),
     grid.Int("Edad", 34),
     grid.Float("Peso", 75.5),
     grid.Choice(u"Profesión\nActual", u"Médico", args=u"Ingeniero,Abogado,Agricultor,Médico,Constructor"),
     grid.Bool("Contratado",1)
-]
+)
 dat = [["Cristian",x,75,"Agricultor",True] for x in range(5)]
 datx = [["Mono",x,50,"Chile",False] for x in range(10)]
 dam.Data = dat
