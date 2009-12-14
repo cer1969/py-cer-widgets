@@ -30,7 +30,7 @@ class Text(object):
         else:
             try:
                 return self.Func(value)
-            except TypeError, e:
+            except TypeError, _e:
                 return ">> Error"
 
 #-----------------------------------------------------------------------------------------

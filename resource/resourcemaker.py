@@ -34,7 +34,7 @@ class ResourceMaker(object):
     def AddStdImageDir(self, dir, ext, mask=None, type_=PNG, raw=False):
         """Agrega imágenes de directorio standard"""
         modpath = os.path.abspath(__file__)
-        moddir, modfile = os.path.split(modpath)
+        moddir, _modfile = os.path.split(modpath)
         imgdir = os.path.join(moddir, dir)
         self.AddImageDir(imgdir, ext, mask, type_, raw)
         
@@ -46,7 +46,7 @@ class ResourceMaker(object):
         
     def AddImageFile(self, filename, mask=None, type_=PNG, raw=False):
         """Agrega imagen individual"""
-        name,ext = os.path.splitext(os.path.basename(filename))
+        name, _ext = os.path.splitext(os.path.basename(filename))
         self._imgData[name] = (filename, mask, type_, raw)
 
     #-------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ class ResourceMaker(object):
         """
         name = os.path.basename(filename)
         if not fullName:
-            name,ext = os.path.splitext(name)
+            name, _ext = os.path.splitext(name)
         data = get_file_data(filename, "r")
         self._strData[name] = data
 
