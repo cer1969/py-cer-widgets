@@ -73,7 +73,7 @@ class MyCanvas(canvas.Canvas):
         #adc.SetPen(wx.Pen(wx.NamedColour('BLUE'), 1, wx.SOLID))
         #adc.SetBrush(wx.Brush(wx.Colour(34,  34,  178, 100)))
         
-        bitmap = wx.Bitmap("transelec.png")
+        #bitmap = wx.Bitmap("transelec.png")
         im = wx.Image("transelec.png")
         im.Rescale(im.GetWidth()/4, im.GetHeight()/4, wx.IMAGE_QUALITY_HIGH)
         bitmap = im.ConvertToBitmap()

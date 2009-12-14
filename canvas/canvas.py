@@ -20,7 +20,7 @@ class Canvas(wx.Window):
         self.OnSize()
     
     def OnPaint(self, event):
-        dc = wx.BufferedPaintDC(self, self.buffer)
+        _dc = wx.BufferedPaintDC(self, self.buffer)
     
     def OnSize(self, event=None):
         size  = self.GetClientSizeTuple()

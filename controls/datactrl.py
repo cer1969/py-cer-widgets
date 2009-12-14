@@ -63,7 +63,7 @@ class DataCtrl(wx.TextCtrl):
     def TestWindow(self):
         text = self.GetValue()
         try:
-            value = self.CerValidator.getData(text)
+            _value = self.CerValidator.getData(text)
         except ValueError, e:
             wx.MessageBox(e[0],"Error",wx.ICON_ERROR|wx.OK,parent=self)
             self.SetBackgroundColour("Yellow")

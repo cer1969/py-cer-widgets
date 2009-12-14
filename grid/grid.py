@@ -72,20 +72,20 @@ class Grid(grid.Grid):
     #-------------------------------------------------------------------------------------
     
     def SetRowLabelWidthInChars(self, nchars, dpixels=6):
-        w,h,d,e = self.GetFullTextExtent(nchars*"0", self.GetLabelFont())
+        w, _h, _d, _e = self.GetFullTextExtent(nchars*"0", self.GetLabelFont())
         self.SetRowLabelSize(w+dpixels)
     
     def SetColLabelHeightInChars(self, nchars, dpixels=4):
-        w,h,d,e = self.GetFullTextExtent("0", self.GetLabelFont())
+        _w, h, d, e = self.GetFullTextExtent("0", self.GetLabelFont())
         self.SetColLabelSize(nchars*h+dpixels+d+e+dpixels)
     
     def SetColWidthInChars(self, col, nchars, dpixels=6):
-        w,h,d,e = self.GetFullTextExtent(nchars*"0", self.GetDefaultCellFont())
+        w, _h, _d, _e = self.GetFullTextExtent(nchars*"0", self.GetDefaultCellFont())
         self.SetColSize(col, w+dpixels)
     
     def GetColWidthInChars(self, col, dpixels=6):
         wc = self.GetColSize(col) - dpixels
-        w,h,d,e = self.GetFullTextExtent("0", self.GetDefaultCellFont())
+        w, _h, _d, _e = self.GetFullTextExtent("0", self.GetDefaultCellFont())
         return round(wc/w, 0)
     
     #def SetDefaultColSizeInChars(self,nchars):
