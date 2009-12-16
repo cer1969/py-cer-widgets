@@ -20,7 +20,7 @@ class Text(object):
         self.Align  = align
         self.Format = format
         self.Attr   = attr
-
+    
     def Func(self, value):
         return self.Format % value
     

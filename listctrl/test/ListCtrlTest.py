@@ -50,7 +50,7 @@ class MainFrame(wx.Frame):
         p = wx.Panel(self,-1)
 
         box = wx.BoxSizer(wx.VERTICAL)
-
+        
         box1 = wx.StaticBoxSizer(wx.StaticBox(p, -1, "MyDataManager"), wx.VERTICAL)
         self.lc1 = lc.ListCtrl(p, dm1, size=(500,150))
         self.lc1.Attrs[1] = wx.ListItemAttr(wx.NullColor, "LIGHT YELLOW")
@@ -82,9 +82,11 @@ class MainFrame(wx.Frame):
         p.SetAutoLayout(True)
         p.SetSizer(box)
         box.Fit(p)
-
+        
         self.Fit()
-
+        
+        self.lc1.SetColumnText(0, u"Argentina")
+        
         self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
         self.Center(wx.BOTH)
 
@@ -93,9 +95,11 @@ class MainFrame(wx.Frame):
 
     def OnDClick1(self,event):
         print self.lc1.OnGetItemText(self.lc1.Selection,0)
-
+        self.lc1.SetColumnText(0, u"Chile")
+    
     def OnDClick2(self,event):
         print self.lc2.OnGetItemText(self.lc2.Selection,0)
+        self.lc1.SetColumnText(0, u"Otro")
 
     def OnDClick3(self,event):
         print self.lc3.Data[self.lc3.Selection].values()

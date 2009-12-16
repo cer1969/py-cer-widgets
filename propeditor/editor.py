@@ -2,6 +2,7 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
+import wx.lib.newevent
 import wx.gizmos as gizmos
 
 #-----------------------------------------------------------------------------------------
@@ -18,21 +19,8 @@ class _NodeData(object):
         self.Edit = i.Edit
 
 #-----------------------------------------------------------------------------------------
-# Considerar el siguiente cambio:
-# import  wx.lib.newevent
-# myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
-myEVTC_PREDIT_VALCHANGE = wx.NewEventType()
-EVTC_PREDIT_VALCHANGE = wx.PyEventBinder(myEVTC_PREDIT_VALCHANGE, 1)
-
-class myEvent(wx.PyCommandEvent):
-    def __init__(self, id_, ctrl, item):
-        wx.PyCommandEvent.__init__(self, myEVTC_PREDIT_VALCHANGE, id_)
-        self.Id = id_
-        self.Ctrl = ctrl
-        self.Item = item
-
-#-----------------------------------------------------------------------------------------
+myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
 PREDIT_DEF_STYLE = (wx.TR_DEFAULT_STYLE | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
                     wx.TR_HIDE_ROOT | gizmos.TR_COLUMN_LINES | wx.TR_ROW_LINES) 
@@ -176,7 +164,7 @@ class Editor(gizmos.TreeListCtrl):
             n = self.GetNode(item)
             self.SetItemText(n, item.GetText(self._obj), 1)
             if setEvent:
-                evt = myEvent(self.GetId(), self, item)
+                evt = myEvent(Id=self.GetId(), Ctrl=self, Item=item)
                 self.GetEventHandler().ProcessEvent(evt)
         else:
             for i in item:

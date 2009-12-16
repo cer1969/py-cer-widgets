@@ -2,6 +2,7 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
+import wx.lib.newevent
 
 #-----------------------------------------------------------------------------------------
 
@@ -9,16 +10,7 @@ __all__ = ['ListCtrl', 'LISTCTRL_DEF_STYLE', 'EVTC_LISTCTRL_DATACHANGE']
 
 #-----------------------------------------------------------------------------------------
 
-myEVTC_LISTCTRL_DATACHANGE = wx.NewEventType()
-EVTC_LISTCTRL_DATACHANGE = wx.PyEventBinder(myEVTC_LISTCTRL_DATACHANGE, 1)
-
-class myEvent(wx.PyCommandEvent):
-    def __init__(self, id_, ctrl):
-        wx.PyCommandEvent.__init__(self, myEVTC_LISTCTRL_DATACHANGE, id_)
-        self.Id = id_
-        self.Ctrl = ctrl
-
-#-----------------------------------------------------------------------------------------
+myEvent, EVTC_LISTCTRL_DATACHANGE = wx.lib.newevent.NewEvent()
 
 LISTCTRL_DEF_STYLE = wx.LC_VRULES|wx.LC_SINGLE_SEL
 
@@ -37,6 +29,8 @@ class ListCtrl(wx.ListCtrl):
         style = wx.LC_VIRTUAL|wx.LC_REPORT|style
         
         wx.ListCtrl.__init__(self, parent, -1, size=size, style=style)
+        
+        self.SetImageList(wx.ImageList(1, 1))
         
         self.Manager = manager
         
@@ -63,11 +57,24 @@ class ListCtrl(wx.ListCtrl):
         self._data = value
         self._currentSort = None
         self.SortByCol()
-        evt = myEvent(self.GetId(), self)
+        evt = myEvent(Id=self.GetId(), Ctrl=self)
         self.GetEventHandler().ProcessEvent(evt)
 
     Data = property(_getData, _setData)
 
+    #-------------------------------------------------------------------------------------
+    # Utilidades
+    
+    def SetColumnText(self, pos, text):
+        c = self.GetColumn(pos)
+        c.SetText(text)
+        self.SetColumn(pos, c)
+    
+    def SetImageList(self, imageList, which=wx.IMAGE_LIST_SMALL):
+        # Se sobreescribe SetImageList para guardar referencia a la lista de imagenes
+        self.__imageList = imageList
+        wx.ListCtrl.SetImageList(self, self.__imageList, which)
+    
     #-------------------------------------------------------------------------------------
     # Propiedad Selection y eventos asociados
     
