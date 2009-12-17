@@ -93,24 +93,24 @@ class Text(DataItem):
     
     def __init__(self, attr, name=None, ctrlSize=None, ctrlStyle=0, edit=True, 
                  msg="", unit=""):
-        val = cval.CerTextValidator()
+        val = cval.TextValidator()
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 
 class Float(DataItem):
     __slots__ = ()
-        
+    
     def __init__(self, attr, name=None, format="%.2f", vmin=None, vmax=None, 
                  ctrlSize=None, ctrlStyle=0, edit=True, msg="", unit=""):
-        val = cval.CerFloatValidator(format, vmin, vmax)
+        val = cval.FloatValidator(format, vmin, vmax)
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 class Int(DataItem):
     __slots__ = ()
-        
+    
     def __init__(self, attr, name=None, format="%d", vmin=None, vmax=None, 
                  ctrlSize=None, ctrlStyle=0, edit=True, msg="", unit=""):
-        val = cval.CerIntValidator(format, vmin, vmax)
+        val = cval.IntValidator(format, vmin, vmax)
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 #-----------------------------------------------------------------------------------------
