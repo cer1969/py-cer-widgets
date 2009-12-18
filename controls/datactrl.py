@@ -14,7 +14,7 @@ class _ThisValidator(wx.PyValidator):
     
     def Validate(self, win):
         return self.GetWindow().TestWindow()
-
+    
     def TransferToWindow(self):
         return self.GetWindow().ToWindow() 
     
@@ -36,7 +36,7 @@ class DataCtrl(wx.TextCtrl):
         style     : Control style. Default 0
         """
         
-        self.Validator = validator
+        self._cerval = validator
         
         wx.TextCtrl.__init__(self, parent, -1, size=size, style=style, 
                              validator=_ThisValidator())
@@ -53,7 +53,7 @@ class DataCtrl(wx.TextCtrl):
         if key < wx.WXK_SPACE or key == wx.WXK_DELETE or key > 255:
             event.Skip()
             return
-        if chr(key) in self.Validator.chars:
+        if chr(key) in self._cerval.chars:
             event.Skip()
             return
         if not wx.Validator_IsSilent():
@@ -63,7 +63,7 @@ class DataCtrl(wx.TextCtrl):
     def TestWindow(self):
         text = self.GetValue()
         try:
-            _value = self.Validator.getData(text)
+            _value = self._cerval.getData(text)
         except ValueError, e:
             wx.MessageBox(e[0],"Error",wx.ICON_ERROR|wx.OK,parent=self)
             self.SetBackgroundColour("Yellow")
@@ -72,7 +72,7 @@ class DataCtrl(wx.TextCtrl):
         return True
 
     def ToWindow(self): 
-        text = self.Validator.getText(self._data)
+        text = self._cerval.getText(self._data)
         self.SetValue(text)
         self.FocusControl()
         return True
@@ -80,7 +80,7 @@ class DataCtrl(wx.TextCtrl):
     def FromWindow(self):
         try:
             text = self.GetValue()
-            self._data = self.Validator.getData(text)
+            self._data = self._cerval.getData(text)
             return True
         except ValueError:
             self._data = None

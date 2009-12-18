@@ -61,7 +61,7 @@ class DataDialog(wx.Dialog):
 class DataGetter(object):
     """Callable: Show DataDialog and returns value"""
     
-    __slots__ = ('Validator', 'Title', 'Msg', 'CtrlSize', 'CtrlStyle')
+    __slots__ = ('_cerval', 'Title', 'Msg', 'CtrlSize', 'CtrlStyle')
     
     def __init__(self, validator, title="Data", ctrlSize=None, ctrlStyle=0, msg=None): 
         """
@@ -71,17 +71,17 @@ class DataGetter(object):
         ctrlStyle : Style for DataCtrl
         msg       : Message to display. Default to title
         """
-        self.Validator = validator
+        self._cerval = validator
         self.Title = title
         self.Msg = msg
         self.CtrlSize = ctrlSize
         self.CtrlStyle = ctrlStyle
     
     def GetText(self, value):
-        return self.Validator.getText(value)
+        return self._cerval.getText(value)
     
     def __call__(self, parent, value=None):
-        dlg = DataDialog(parent, self.Validator, self.Title, value, self.CtrlSize,
+        dlg = DataDialog(parent, self._cerval, self.Title, value, self.CtrlSize,
                          self.CtrlStyle,  self.Msg)
         value = dlg.Data if dlg.ShowModal() == wx.ID_OK else None
         dlg.Destroy()
