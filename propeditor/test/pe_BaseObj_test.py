@@ -46,7 +46,7 @@ data2 = pe.EditorData(
     pe.EditorGroup("Otros", u"Otros datos",
         pe.Date("fnac", "Fecha Nacimiento", msg="Fecha de nacimiento empleado"),
         pe.Switch("cocina", ["Si","No","Mas o menos"], msg="Habilidades culinarias"),
-        pe.Float("peso", "Peso", edit=False, msg="Peso del empleado en kilos"),
+        pe.Float("peso", "Peso", edit=False, msg="Peso del empleado en kilos", unit=u"Kg."),
         pe.Choice("actividad", ["Cantar","Futbol","Tenis","Voleiball","Otras"],
                   msg="Actividad Extra-programatica")
     ),
