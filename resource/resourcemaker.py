@@ -51,6 +51,7 @@ class ResourceMaker(object):
 
     #-------------------------------------------------------------------------------------
     # Métodos relacionados con ImageList
+    # TODO: Reemplazar width, height por tuple
     
     def AddImageList(self, name, width, height, imgnames):
         """Datos para creación de wx.ImageList"""
