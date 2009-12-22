@@ -21,7 +21,9 @@ class MainFrame(wx.Frame):
         self.CreateStatusBar(2)
         #self.SetIcon(wx.Icon("Tao.ico",wx.BITMAP_TYPE_ICO))     # Icono de archivo
         appres = wx.GetApp().resman
-        #self.SetIcon(appres.Icon("cw_new"))                     # Icono de recurso
+        ico = appres.Icon("wx_executable_file", (32, 32))
+        #ico.SetSize((32,32))
+        self.SetIcon(ico)                     # Icono de recurso
         #fileType = wx.TheMimeTypesManager.GetFileTypeFromExtension(".xls")
         #print fileType.GetIconInfo()
         #self.SetIcon(fileType.GetIcon())                         # Icono de extensión de sistema

@@ -40,31 +40,31 @@ class ResourceManager(object):
         return self._imgs[name].Image
 
     def ImageList(self, name):
-        try:
-            il = self._imgLists[name]
-        except KeyError:
+        if not self._imgLists.has_key(name):
             w, h, imn = self._imgListData[name]
             il = wx.ImageList(w, h, True)
             for i in imn:
-                il.Add(self.Bitmap(i))
+                bmp = self.Bitmap(i, (w, h))
+                il.Add(bmp)
             self._imgLists[name] = il
-        return il
-
-    def Bitmap(self,name):
-        try:
+        return self._imgLists[name]
+    
+    def Bitmap(self, name, size=(16, 16)):
+        if self._imgs.has_key(name):
             return self._imgs[name].Bitmap
-        except KeyError:
+        else:
             # Busquemos en el wxArtProvider
             # Si no se encuentra en wxArtProvider se obtiene Bitmap nulo
             artName = "wxART_%s" % name[3:].upper()
-            bmp = wx.ArtProvider.GetBitmap(artName,size=(16,16))
+            bmp = wx.ArtProvider.GetBitmap(artName, size=size)
             return bmp
-
-    def Icon(self,name):
-        try:
+    
+    def Icon(self, name, size=(16, 16)):
+        if self._imgs.has_key(name):
             return self._imgs[name].Icon
-        except KeyError:
-            bmp = self.Bitmap(name)
+        else:
+            print name, size
+            bmp = self.Bitmap(name, size)
             icon = wx.EmptyIcon()
             icon.CopyFromBitmap(bmp)
             return icon
