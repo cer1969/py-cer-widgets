@@ -2,5 +2,5 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
 from headers import *
-from datamanager import *
+from data import *
 from listctrl import *
