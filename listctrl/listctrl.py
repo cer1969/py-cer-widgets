@@ -39,10 +39,10 @@ class ListCtrl(wx.ListCtrl):
         self._selected = None
         self._currentSort = None
         
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self.onItemSelected,   self)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self.onItemActivated,  self)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.onItemDeselected, self)
-        self.Bind(wx.EVT_LIST_COL_CLICK,       self.onColClick,       self)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED,   self._onItemSelected,   self)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED,  self._onItemActivated,  self)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self._onItemDeselected, self)
+        self.Bind(wx.EVT_LIST_COL_CLICK,       self._onColClick,       self)
 
     #-------------------------------------------------------------------------------------
     # Métodos sobreescritos
@@ -112,21 +112,21 @@ class ListCtrl(wx.ListCtrl):
     #-------------------------------------------------------------------------------------
     # Eventos asociados a selection
     
-    def onItemSelected(self,event):
+    def _onItemSelected(self, event):
         self._selected = event.GetIndex()
         event.Skip()
     
-    def onItemActivated(self,event):
+    def _onItemActivated(self, event):
         self._selected = event.GetIndex()
         event.Skip()
     
-    def onItemDeselected(self,event):
+    def _onItemDeselected(self, event):
         self._selected = None
         event.Skip()
     
     #-------------------------------------------------------------------------------------
     
-    def onColClick(self, event):
+    def _onColClick(self, event):
         col = event.GetColumn()
         if col == self._currentSort:
             self._data.reverse()
