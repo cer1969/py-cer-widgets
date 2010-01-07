@@ -28,7 +28,7 @@ class ListCtrl(wx.ListCtrl):
         
         wx.ListCtrl.__init__(self, parent, -1, size=size, style=style)
         
-        self.setImageList(wx.ImageList(1, 1))
+        self.SetImageList(wx.ImageList(1, 1))
         
         ctrl = weakref.proxy(self)
         for i, header in enumerate(headers):
@@ -52,8 +52,6 @@ class ListCtrl(wx.ListCtrl):
         self._imageList = imageList
         wx.ListCtrl.SetImageList(self, self._imageList, which)
     
-    setImageList = SetImageList
-    
     # Métodos personalizables de la lista virtual
     
     def OnGetItemText(self, row, col):
@@ -64,6 +62,38 @@ class ListCtrl(wx.ListCtrl):
     
     def OnGetItemAttr(self, row):
         return self.attrs[row % 2]
+
+    #-------------------------------------------------------------------------------------
+    # Métodos públicos
+    
+    def SortByCol(self, col=None):
+        # No modifica __currentSort
+        # Si col es None se repite último sort
+        if col is None:
+            col = self._currentSort
+        if not(col is None):
+            self._data.sortByHeader(self.headers[col])
+        self.UpdateView()
+    
+    def UpdateView(self):
+        """ Normalmente este método no requiere sobreescritura
+        """
+        nr = len(self._data)
+        self.SetItemCount(nr)
+        if nr <=0:
+            self.selection = None
+        else:
+            ini = self.GetTopItem()
+            fin = ini + 1 + self.GetCountPerPage()
+            self.RefreshItems(ini, fin)
+            if self.selection is None:
+                self.selection = 0
+            elif self.selection > nr - 1:
+                self.selection = nr - 1
+            else:
+                # Necesario para forzar repintado de la selección
+                self.selection = self.selection
+        self.Refresh()
     
     #-------------------------------------------------------------------------------------
     # Propiedad data
@@ -74,7 +104,7 @@ class ListCtrl(wx.ListCtrl):
     def _setData(self, value):
         self._data = value
         self._currentSort = None
-        self.sortByCol()
+        self.SortByCol()
         evt = myEvent(idx=self.GetId(), ctrl=self)
         self.GetEventHandler().ProcessEvent(evt)
     
@@ -110,7 +140,7 @@ class ListCtrl(wx.ListCtrl):
     selectedItem = property(_getSelectedItem)
     
     #-------------------------------------------------------------------------------------
-    # Eventos asociados a selection
+    # Eventos 
     
     def _onItemSelected(self, event):
         self._selected = event.GetIndex()
@@ -124,8 +154,6 @@ class ListCtrl(wx.ListCtrl):
         self._selected = None
         event.Skip()
     
-    #-------------------------------------------------------------------------------------
-    
     def _onColClick(self, event):
         col = event.GetColumn()
         if col == self._currentSort:
@@ -133,34 +161,5 @@ class ListCtrl(wx.ListCtrl):
         else:
             self._data.sortByHeader(self.headers[col])
             self._currentSort = col
-        self.updateView()
+        self.UpdateView()
         event.Skip()
-    
-    def sortByCol(self, col=None):
-        # No modifica __currentSort
-        # Si col es None se repite último sort
-        if col is None:
-            col = self._currentSort
-        if not(col is None):
-            self._data.sortByHeader(self.headers[col])
-        self.updateView()
-    
-    def updateView(self):
-        """ Normalmente este método no requiere sobreescritura
-        """
-        nr = len(self._data)
-        self.SetItemCount(nr)
-        if nr <=0:
-            self.selection = None
-        else:
-            ini = self.GetTopItem()
-            fin = ini + 1 + self.GetCountPerPage()
-            self.RefreshItems(ini, fin)
-            if self.selection is None:
-                self.selection = 0
-            elif self.selection > nr - 1:
-                self.selection = nr - 1
-            else:
-                # Necesario para forzar repintado de la selección
-                self.selection = self.selection
-        self.Refresh()

@@ -55,28 +55,28 @@ class MainFrame(wx.Frame):
         box = wx.BoxSizer(wx.VERTICAL)
         
         box1 = wx.StaticBoxSizer(wx.StaticBox(p, -1, "MyData"), wx.VERTICAL)
-        self.lc1 = lc.ListCtrl(p, h1, size=(500,150))
-        self.lc1.attrs[1] = wx.ListItemAttr(wx.NullColor, "LIGHT YELLOW")
-        self.lc1.data = MyData()
-        self.lc1.selection = 3
-        wx.EVT_LEFT_DCLICK(self.lc1, self.onDClick1)
-        box1.Add(self.lc1, 1, wx.EXPAND|wx.ALL)
+        self.lista1 = lc.ListCtrl(p, h1, size=(500,150))
+        self.lista1.attrs[1] = wx.ListItemAttr(wx.NullColor, "LIGHT YELLOW")
+        self.lista1.data = MyData()
+        self.lista1.selection = 3
+        wx.EVT_LEFT_DCLICK(self.lista1, self.onDClick1)
+        box1.Add(self.lista1, 1, wx.EXPAND|wx.ALL)
         box.Add(box1, 1, wx.EXPAND|wx.ALL, 5)
         
         box2 = wx.StaticBoxSizer(wx.StaticBox(p, -1, "RowDataModel"), wx.VERTICAL)
-        self.lc2 = lc.ListCtrl(p, h2, size=(500,150))
-        self.lc2.attrs[1] = wx.ListItemAttr(wx.NullColor, "LIGHT BLUE")
-        self.lc2.data = lc.RowData(dat2)
-        wx.EVT_LEFT_DCLICK(self.lc2, self.onDClick2)
-        box2.Add(self.lc2, 1, wx.EXPAND|wx.ALL)
+        self.lista2 = lc.ListCtrl(p, h2, size=(500,150))
+        self.lista2.attrs[1] = wx.ListItemAttr(wx.NullColor, "LIGHT BLUE")
+        self.lista2.data = lc.RowData(dat2)
+        wx.EVT_LEFT_DCLICK(self.lista2, self.onDClick2)
+        box2.Add(self.lista2, 1, wx.EXPAND|wx.ALL)
         box.Add(box2, 1, wx.EXPAND|wx.ALL, 5)
         
         box3 = wx.StaticBoxSizer(wx.StaticBox(p, -1, "ObjDataModel"), wx.VERTICAL)
-        self.lc3 = lc.ListCtrl(p, h3, size=(500,150))
-        self.lc3.data = lc.ObjData(dat3)
-        self.lc3.selection = 3
-        wx.EVT_LEFT_DCLICK(self.lc3, self.onDClick3)
-        box3.Add(self.lc3, 1, wx.EXPAND|wx.ALL)
+        self.lista3 = lc.ListCtrl(p, h3, size=(500,150))
+        self.lista3.data = lc.ObjData(dat3)
+        self.lista3.selection = 3
+        wx.EVT_LEFT_DCLICK(self.lista3, self.onDClick3)
+        box3.Add(self.lista3, 1, wx.EXPAND|wx.ALL)
         box.Add(box3, 1, wx.EXPAND|wx.ALL, 5)
         
         p.SetAutoLayout(True)
@@ -85,7 +85,7 @@ class MainFrame(wx.Frame):
         
         self.Fit()
         
-        self.lc1.headers[0].text = u"Argentina"
+        self.lista1.headers[0].text = u"Argentina"
         
         self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
         self.Center(wx.BOTH)
@@ -94,21 +94,21 @@ class MainFrame(wx.Frame):
         self.Destroy()
     
     def onDClick1(self, event):
-        print self.lc1.OnGetItemText(self.lc1.selection, 0)
-        print self.lc1.selectedItem
-        headers = self.lc1.headers
+        print self.lista1.OnGetItemText(self.lista1.selection, 0)
+        print self.lista1.selectedItem
+        headers = self.lista1.headers
         headers[0].text = u"Chile"
         headers[1].width = 100
         headers[1].align = wx.LIST_FORMAT_CENTER
-        self.lc1.updateView()
+        self.lista1.UpdateView()
     
     def onDClick2(self, event):
-        print self.lc2.selectedItem
-        self.lc1.headers[0].text = u"Otro"
-        self.lc1.updateView()
+        print self.lista2.selectedItem
+        self.lista1.headers[0].text = u"Otro"
+        self.lista1.UpdateView()
     
     def onDClick3(self, event):
-        item = self.lc3.selectedItem
+        item = self.lista3.selectedItem
         print item.values()
         print item.d
 
