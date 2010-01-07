@@ -22,6 +22,8 @@ class ObjChoice(wx.Choice):
         self.attr = attr
         self.SetChoices(choices, nosel)
     
+    selection = property(wx.Choice.GetSelection, wx.Choice.SetSelection)
+    
     def SetChoices(self, choices, nosel=None):
         self.Clear()
         
@@ -34,3 +36,5 @@ class ObjChoice(wx.Choice):
     
     def GetObjSelection(self):
         return self.GetClientData(self.GetSelection())
+    
+    selectedItem = property(GetObjSelection)

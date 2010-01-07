@@ -35,14 +35,14 @@ class DataDialog(wx.Dialog):
         
         self._ctrl = DataCtrl(self, validator, data, _size, ctrlStyle)
         
-        box.Add(self._ctrl,0,wx.EXPAND|wx.LEFT|wx.RIGHT,10)
+        box.Add(self._ctrl, 0, wx.EXPAND|wx.LEFT|wx.RIGHT, 10)
         
         oksizer = wx.BoxSizer(wx.HORIZONTAL)
-        okbut = wx.Button(self,wx.ID_OK,"Ok")
+        okbut = wx.Button(self, wx.ID_OK, "Ok")
         okbut.SetDefault()
-        oksizer.Add(okbut,0,wx.RIGHT,10)
-        oksizer.Add(wx.Button(self,wx.ID_CANCEL,"Cancel"),0,wx.ALL,0)
-        box.Add(oksizer,0, wx.ALIGN_RIGHT|wx.ALL, 10)
+        oksizer.Add(okbut, 0, wx.RIGHT, 10)
+        oksizer.Add(wx.Button(self, wx.ID_CANCEL, "Cancel"), 0, wx.ALL, 0)
+        box.Add(oksizer, 0, wx.ALIGN_RIGHT|wx.ALL, 10)
         
         self.SetAutoLayout(True)
         self.SetSizer(box)
@@ -52,7 +52,7 @@ class DataDialog(wx.Dialog):
         self.CentreOnParent(wx.BOTH)
     
     def _getData(self):
-        return self._ctrl.Data
+        return self._ctrl.data
     
     Data = property(_getData)
 

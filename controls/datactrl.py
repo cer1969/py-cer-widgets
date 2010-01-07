@@ -38,8 +38,7 @@ class DataCtrl(wx.TextCtrl):
         
         self._cerval = validator
         
-        wx.TextCtrl.__init__(self, parent, -1, size=size, style=style, 
-                             validator=_ThisValidator())
+        wx.TextCtrl.__init__(self, parent, -1, size=size, style=style, validator=_ThisValidator())
         
         if validator.chars != "":
             self.Bind(wx.EVT_CHAR, self._onChar)
@@ -47,7 +46,7 @@ class DataCtrl(wx.TextCtrl):
         # se debe llamar ToWindow() para actualizar
         # esto normalmente lo hace el validator
         self._data = data
-
+    
     def _onChar(self, event):
         key = event.GetKeyCode()
         if key < wx.WXK_SPACE or key == wx.WXK_DELETE or key > 255:
@@ -65,18 +64,18 @@ class DataCtrl(wx.TextCtrl):
         try:
             _value = self._cerval.getData(text)
         except ValueError, e:
-            wx.MessageBox(e[0],"Error",wx.ICON_ERROR|wx.OK,parent=self)
+            wx.MessageBox(e[0], "Error", wx.ICON_ERROR|wx.OK, parent=self)
             self.SetBackgroundColour("Yellow")
             self.FocusControl()
             return False
         return True
-
+    
     def ToWindow(self): 
         text = self._cerval.getText(self._data)
         self.SetValue(text)
         self.FocusControl()
         return True
-
+    
     def FromWindow(self):
         try:
             text = self.GetValue()
@@ -91,9 +90,9 @@ class DataCtrl(wx.TextCtrl):
         self.SetFocus()
         val = self.GetValue()
         nch = len(val) + len(val.split("\n")) - 1
-        self.SetSelection(0,nch)
+        self.SetSelection(0, nch)
         #self.Refresh()
-
+    
     def _setData(self, data):
         self._data = data
         self.ToWindow()
@@ -102,4 +101,4 @@ class DataCtrl(wx.TextCtrl):
         self.FromWindow()
         return self._data
     
-    Data = property(_getData, _setData)
+    data = property(_getData, _setData)
