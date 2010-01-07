@@ -24,7 +24,7 @@ class TipBox(wx.TextCtrl):
         style = wx.TE_MULTILINE|wx.TE_READONLY|wx.TE_RICH2|wx.STATIC_BORDER|style
         wx.TextCtrl.__init__(self, parent, -1, "", size=size, style=style)
         
-        self.ShowValue = showValue
+        self.showValue = showValue
         
         _fgColour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNTEXT)
         _bgColour = wx.SystemSettings.GetColour(wx.SYS_COLOUR_BTNFACE)
@@ -35,9 +35,9 @@ class TipBox(wx.TextCtrl):
         _nf = self.GetFont()
         _bf = wx.Font(_nf.GetPointSize(), _nf.GetFamily(), _nf.GetStyle(), wx.FONTWEIGHT_BOLD)
         
-        self.NameAttr = wx.TextAttr(_fgColour, _bgColour, _bf)
-        self.TextAttr = wx.TextAttr(_fgColour, _bgColour, _nf)
-        self.ValueAttr = wx.TextAttr("ROYALBLUE", "LIGHTYELLOW", _nf)
+        self.nameAttr = wx.TextAttr(_fgColour, _bgColour, _bf)
+        self.textAttr = wx.TextAttr(_fgColour, _bgColour, _nf)
+        self.valueAttr = wx.TextAttr("ROYALBLUE", "LIGHTYELLOW", _nf)
     
     def SetText(self, name, text, value=None):
         """Modifica texto del TextCtrl.
@@ -46,12 +46,12 @@ class TipBox(wx.TextCtrl):
         value: valor a presentar en línea siguiente.
         """
         self.SetValue("")
-        self.SetDefaultStyle(self.NameAttr)
+        self.SetDefaultStyle(self.nameAttr)
         self.WriteText(name + " : ")
-        self.SetDefaultStyle(self.TextAttr)
+        self.SetDefaultStyle(self.textAttr)
         self.WriteText(text)
-        if (not self.ShowValue) or (value is None):
+        if (not self.showValue) or (value is None):
             return
         self.WriteText("\n")
-        self.SetDefaultStyle(self.ValueAttr)
+        self.SetDefaultStyle(self.valueAttr)
         self.WriteText(value)
