@@ -15,14 +15,14 @@ class Canvas(wx.Window):
 
     def __init__(self, parent, id=-1, pos=(-1,-1), size=(-1,-1), style=wx.SUNKEN_BORDER):
         wx.Window.__init__(self, parent, id, pos, size, style)
-        self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_SIZE, self.OnSize)
-        self.OnSize()
+        self.Bind(wx.EVT_PAINT, self._onPaint)
+        self.Bind(wx.EVT_SIZE, self._onSize)
+        self._onSize()
     
-    def OnPaint(self, event):
+    def _onPaint(self, event):
         _dc = wx.BufferedPaintDC(self, self.buffer)
     
-    def OnSize(self, event=None):
+    def _onSize(self, event=None):
         size  = self.GetClientSizeTuple()
         self.buffer = wx.EmptyBitmap(*size)
         self.UpdateDrawing()
