@@ -63,7 +63,6 @@ class ResourceManager(object):
         if self._imgs.has_key(name):
             return self._imgs[name].Icon
         else:
-            print name, size
             bmp = self.Bitmap(name, size)
             icon = wx.EmptyIcon()
             icon.CopyFromBitmap(bmp)
