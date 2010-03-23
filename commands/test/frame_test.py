@@ -56,9 +56,9 @@ class MainFrame(wx.Frame):
         print idx
         #tb = self.GetToolBar()
         #print tb.GetToolState(idx)
-        #if tbd.ArgsDict.has_key(idx):
+        #if idx in tbd.ArgsDict:
         #    print "Tool idx=",tbd.ArgsDict[idx]
-
+        
         #mb = self.GetMenuBar()
         #sm = mb.GetMenu(1).GetMenuItems()[0].GetSubMenu()
         #id_metodo_wx = sm.GetMenuItems()[0].GetId()

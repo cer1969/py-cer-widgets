@@ -40,7 +40,7 @@ class ResourceManager(object):
         return self._imgs[name].Image
 
     def ImageList(self, name):
-        if not self._imgLists.has_key(name):
+        if name not in self._imgLists:
             w, h, imn = self._imgListData[name]
             il = wx.ImageList(w, h, True)
             for i in imn:
@@ -50,7 +50,7 @@ class ResourceManager(object):
         return self._imgLists[name]
     
     def Bitmap(self, name, size=(16, 16)):
-        if self._imgs.has_key(name):
+        if name in self._imgs:
             return self._imgs[name].Bitmap
         else:
             # Busquemos en el wxArtProvider
@@ -60,7 +60,7 @@ class ResourceManager(object):
             return bmp
     
     def Icon(self, name, size=(16, 16)):
-        if self._imgs.has_key(name):
+        if name in self._imgs:
             return self._imgs[name].Icon
         else:
             bmp = self.Bitmap(name, size)
