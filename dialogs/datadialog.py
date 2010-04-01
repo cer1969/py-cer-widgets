@@ -16,7 +16,7 @@ class DataDialog(wx.Dialog):
     def __init__(self, parent, validator, title="Data Dialog", data=None, ctrlSize=None,
                  ctrlStyle=0, msg=None): 
         """
-        validator : Validator object (cer.utils.validators)
+        validator : Validator object (cer.value.validator)
         title     : Dialog Title
         data      : Data value
         ctrlSize  : Size for DataCtrl
@@ -65,7 +65,7 @@ class DataGetter(object):
     
     def __init__(self, validator, title="Data", ctrlSize=None, ctrlStyle=0, msg=None): 
         """
-        validator : Validator object (cer.utils.validators)
+        validator : Validator object (cer.value.validator)
         title     : Dialog Title
         ctrlSize  : Size for DataCtrl
         ctrlStyle : Style for DataCtrl
