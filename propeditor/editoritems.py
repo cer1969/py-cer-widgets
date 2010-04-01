@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-import cer.utils.validators as cval
+from cer.value import validator
 import cer.widgets.dialogs as dlg
 
 #-----------------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class Text(DataItem):
     
     def __init__(self, attr, name=None, ctrlSize=None, ctrlStyle=0, edit=True, 
                  msg="", unit=""):
-        val = cval.TextValidator()
+        val = validator.Text()
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 
@@ -102,7 +102,7 @@ class Float(DataItem):
     
     def __init__(self, attr, name=None, format="%.2f", vmin=None, vmax=None, 
                  ctrlSize=None, ctrlStyle=0, edit=True, msg="", unit=""):
-        val = cval.FloatValidator(format, vmin, vmax)
+        val = validator.Float(format, vmin, vmax)
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 class Int(DataItem):
@@ -110,7 +110,7 @@ class Int(DataItem):
     
     def __init__(self, attr, name=None, format="%d", vmin=None, vmax=None, 
                  ctrlSize=None, ctrlStyle=0, edit=True, msg="", unit=""):
-        val = cval.IntValidator(format, vmin, vmax)
+        val = validator.Int(format, vmin, vmax)
         DataItem.__init__(self, attr, val, name, ctrlSize, ctrlStyle, edit, msg, unit)
 
 #-----------------------------------------------------------------------------------------

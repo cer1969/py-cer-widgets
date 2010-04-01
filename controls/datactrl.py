@@ -30,7 +30,7 @@ class DataCtrl(wx.TextCtrl):
     
     def __init__(self, parent, validator, data=None, size=(150,-1), style=0):
         """
-        validator : Validator object (cer.utils.validators)
+        validator : Validator object (cer.value.validator)
         data      : Data value
         size      : Control size. Default (150, -1)
         style     : Control style. Default 0
