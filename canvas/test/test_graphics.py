@@ -11,6 +11,7 @@ class MyCanvas(canvas.Canvas):
     
     def Draw(self, dc):
         
+        dc.BeginDrawing()
         dc.SetBackground(wx.WHITE_BRUSH)
         dc.Clear()
         
@@ -96,6 +97,7 @@ class MyCanvas(canvas.Canvas):
         gc.DrawPath(path)
         gc.Translate(5, 5)
         gc.FillPath(path, wx.WINDING_RULE) #wx.ODDEVEN_RULE
+        dc.EndDrawing()
 
 #- <00> -----------------------------------------------------------------------
 

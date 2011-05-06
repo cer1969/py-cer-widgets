@@ -17,6 +17,8 @@ class Canvas(wx.Window):
         wx.Window.__init__(self, parent, id, pos, size, style)
         self.Bind(wx.EVT_PAINT, self._onPaint)
         self.Bind(wx.EVT_SIZE, self._onSize)
+        #self.SetDoubleBuffered(True)
+        #print ">>>>", self.IsDoubleBuffered()
         self._onSize()
     
     def _onPaint(self, event):
@@ -29,6 +31,8 @@ class Canvas(wx.Window):
     
     def UpdateDrawing(self):
         dc = wx.BufferedDC(wx.ClientDC(self), self.buffer)
+        #dc = wx.MemoryDC()
+        #dc.SelectObject(self.buffer)
         self.Draw(dc)
         self.Refresh()
     

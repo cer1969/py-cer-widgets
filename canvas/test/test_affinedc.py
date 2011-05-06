@@ -11,6 +11,7 @@ class MyCanvas(canvas.Canvas):
     
     def Draw(self, dc):
         
+        dc.BeginDrawing()
         dc.SetBackground(wx.WHITE_BRUSH)
         dc.Clear()
         
@@ -102,6 +103,7 @@ class MyCanvas(canvas.Canvas):
         #adc.DrawPath(path)
         #adc.Translate(5, 5)
         #adc.FillPath(path)
+        dc.EndDrawing()
 
 #- <00> -----------------------------------------------------------------------
 
