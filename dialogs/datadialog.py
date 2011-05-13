@@ -25,7 +25,7 @@ class DataDialog(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, -1, title)
         
-        _size = (150, -1) if ctrlSize is None else ctrlSize
+        _size = (-1, -1) if ctrlSize is None else ctrlSize
         _msg = title if msg is None else msg
         
         box = wx.BoxSizer(wx.VERTICAL)
