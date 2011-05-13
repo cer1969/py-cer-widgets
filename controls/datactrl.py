@@ -28,7 +28,7 @@ class _ThisValidator(wx.PyValidator):
 
 class DataCtrl(wx.TextCtrl):
     
-    def __init__(self, parent, validator, data=None, size=(150,-1), style=0):
+    def __init__(self, parent, validator, data=None, size=(-1, -1), style=0):
         """
         validator : Validator object (cer.value.validator)
         data      : Data value
