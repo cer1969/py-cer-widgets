@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 from __future__ import division
-import wx, os, cStringIO
+import wx, os, io
 
 #-----------------------------------------------------------------------------------------
 
@@ -13,7 +12,7 @@ __all__ = ['get_font_data','get_file_data','get_image_data',
 # Se requiere instancia de wx.App para poder usar las funciones
 
 if not wx.GetApp():
-    app = wx.PySimpleApp()
+    app = wx.App()
 
 #-----------------------------------------------------------------------------------------
 # Funciones para obtener data
@@ -124,7 +123,7 @@ class ImageResource(Resource):
     
     def _getImage(self):
         if self._img is None:
-            stream = cStringIO.StringIO(self.Data)
+            stream = io.BytesIO(self.Data)
             self._img = wx.ImageFromStream(stream)
         return self._img
     Image = property(_getImage)
@@ -150,8 +149,8 @@ if __name__ == "__main__":
     data = get_image_data("Nuvola/cw_tb_tabla.bmp","#804000")
 
     imr = ImageResource(data)
-    print imr.Image
-    print imr.Icon
+    print (imr.Image)
+    print (imr.Icon)
     
     fnr = FontResource("Tahoma",8,wx.BOLD)
-    print fnr.Font
+    print (fnr.Font)

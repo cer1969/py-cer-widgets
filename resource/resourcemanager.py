@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
-from resource import Resource, FontResource, ImageResource
+from .resource import Resource, FontResource, ImageResource
 
 #-----------------------------------------------------------------------------------------
 
@@ -17,7 +16,7 @@ class ResourceManager(object):
     def __init__(self, imgData={}, imgListData={}, strData={}, fontData={}):
         
         imgs = {}
-        for name, data in imgData.iteritems():
+        for name, data in imgData.items():
             imgs[name] = ImageResource(data)
         self._imgs = imgs
         
@@ -25,12 +24,12 @@ class ResourceManager(object):
         self._imgLists = {}
         
         strs = {}
-        for name, data in strData.iteritems():
+        for name, data in strData.items():
             strs[name] = Resource(data)
         self._strs = strs
         
         fonts = {}
-        for name, data in fontData.iteritems():
+        for name, data in fontData.items():
             fonts[name] = FontResource(*data)
         self._fonts = fonts
     

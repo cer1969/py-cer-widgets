@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 from __future__ import division
 import glob, os, py_compile
 import wx
-from resource import get_font_data, get_file_data, get_image_data
+from .resource import get_font_data, get_file_data, get_image_data
 
 #-----------------------------------------------------------------------------------------
 
@@ -175,7 +174,7 @@ class ResourceMaker(object):
         f.close()
 
         py_compile.compile(filename)
-        print "Terminado"
+        print ("Terminado")
 
 #-----------------------------------------------------------------------------------------
 # Plantilla de archivo de recursos
