@@ -3,7 +3,7 @@
 
 import wx
 import wx.lib.newevent
-import wx.gizmos as gizmos
+import wx.dataview as dataview
 
 #-----------------------------------------------------------------------------------------
 
@@ -23,9 +23,9 @@ class _NodeData(object):
 myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
 PREDIT_DEF_STYLE = (wx.TR_DEFAULT_STYLE | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
-                    wx.TR_HIDE_ROOT | gizmos.TR_COLUMN_LINES | wx.TR_ROW_LINES) 
+                    wx.TR_HIDE_ROOT | wx.TR_ROW_LINES) # dataview.TR_COLUMN_LINES
 
-class Editor(gizmos.TreeListCtrl):
+class Editor(dataview.TreeListCtrl):
     """ Widget to display and edit properties
     
     Public attributtes
@@ -56,7 +56,7 @@ class Editor(gizmos.TreeListCtrl):
         style     : Default to PREDIT_DEF_STYLE
         """
         
-        gizmos.TreeListCtrl.__init__(self, parent, -1, size=size, style=style)
+        dataview.TreeListCtrl.__init__(self, parent, -1, size=size, style=style)
         
         self.FmtGroup  = ("BLACK", "LIGHT BLUE", True)
         self.FmtItem   = ("BLACK", "WHITE", False)
@@ -64,10 +64,10 @@ class Editor(gizmos.TreeListCtrl):
         
         self._msgBox = None
         
-        self.AddColumn(colnames[0], colswidth[0], wx.ALIGN_LEFT)
-        self.AddColumn(colnames[1], colswidth[1], wx.ALIGN_RIGHT)
-        self.AddColumn(colnames[2], colswidth[2], wx.ALIGN_CENTER)
-        self.SetMainColumn(0)
+        self.AppendColumn(colnames[0], colswidth[0], wx.ALIGN_LEFT)
+        self.AppendColumn(colnames[1], colswidth[1], wx.ALIGN_RIGHT)
+        self.AppendColumn(colnames[2], colswidth[2], wx.ALIGN_CENTER)
+        #self.SetMainColumn(0)
         
         self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_TREE_SEL_CHANGING, self.OnItemSelected)
@@ -144,7 +144,7 @@ class Editor(gizmos.TreeListCtrl):
         node = self.GetNode(item)
         
         if item.IsItem:
-            nodeAttr = self.GetPyData(node)
+            nodeAttr = self.GetItemData(node)
             attr = self.FmtItem if nodeAttr.Edit else self.FmtNoEdit
         else:
             attr = self.FmtGroup
@@ -152,9 +152,9 @@ class Editor(gizmos.TreeListCtrl):
                 self.UpdateFormats(i)
         
         fg, bg, bold = attr
-        self.SetItemTextColour(node, fg)
-        self.SetItemBackgroundColour(node, bg)
-        self.SetItemBold(node, bold)
+        #self.SetItemTextColour(node, fg)
+        #self.SetItemBackgroundColour(node, bg)
+        #self.SetItemBold(node, bold)
     
     def UpdateValues(self, item=None, setEvent=False):
         if item is None:
@@ -162,7 +162,7 @@ class Editor(gizmos.TreeListCtrl):
         
         if item.IsItem:
             n = self.GetNode(item)
-            self.SetItemText(n, item.GetText(self._obj), 1)
+            self.SetItemText(n, 1, item.GetText(self._obj))
             if setEvent:
                 evt = myEvent(Id=self.GetId(), Ctrl=self, Item=item)
                 self.GetEventHandler().ProcessEvent(evt)
@@ -176,8 +176,8 @@ class Editor(gizmos.TreeListCtrl):
     def _addNode(self, node, group):
         for i in group:
             n = self.AppendItem(node, i.Name)
-            self.SetItemText(n, i.Unit, 2)
-            self.SetPyData(n, _NodeData(i))
+            self.SetItemText(n, 2, i.Unit)
+            self.SetItemData(n, _NodeData(i))
             self._nodeDict[id(i)] = n
             if not i.IsItem:
                 self._addNode(n, i)
@@ -200,12 +200,13 @@ class Editor(gizmos.TreeListCtrl):
         self._data = value
         self._nodeDict = {} # relaciona items in EditorData con nodos
         
-        root = self.AddRoot(self._data.Name)
+        #root = self.AddRoot(self._data.Name)
+        root = self.AppendItem(self.GetRootItem(), self._data.Name)
         self._nodeDict[id(self._data)] = root
         
         self._addNode(root, self._data)
         self.UpdateFormats()
-        self.ExpandAll(root)
+        self.Expand(root)
     
     def _getObj(self):
         return self._obj

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
@@ -82,7 +81,7 @@ class Text(object):
         else:
             try:
                 return self.func(value)
-            except TypeError, _e:
+            except TypeError as _e:
                 return ">> Error"
 
 #-----------------------------------------------------------------------------------------

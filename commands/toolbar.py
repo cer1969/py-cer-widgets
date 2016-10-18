@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
@@ -30,7 +29,7 @@ class ToolBar(list):
         """Devuelve objeto cw.Command
         id_ : Id del objeto buscado.
         """
-        sal = [x for x in self if x <> None]
+        sal = [x for x in self if x != None]
         sal = [x for x in sal if x.Id==id_]
         return sal[0]
     

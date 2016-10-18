@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from utils import *
-from commands import *
-from controls import *
-from dialogs import *
+from .utils import *
+from .commands import *
+from .controls import *
+from .dialogs import *
 
 # cer.widgets.canvas
 # use: from cer.widgets import canvas 

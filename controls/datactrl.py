@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
@@ -63,7 +62,7 @@ class DataCtrl(wx.TextCtrl):
         text = self.GetValue()
         try:
             _value = self._cerval.getData(text)
-        except ValueError, e:
+        except ValueError as e:
             wx.MessageBox(e[0], "Error", wx.ICON_ERROR|wx.OK, parent=self)
             self.SetBackgroundColour("Yellow")
             self.FocusControl()

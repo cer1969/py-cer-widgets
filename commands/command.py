@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
@@ -70,9 +69,9 @@ class Command(object):
             mi = wx.MenuItem(menu, self.Id, self.Text, self.Help, self.Type)
         
         resman = _get_resman()
-        if resman and (self.Bmp <> ""):
+        if resman and (self.Bmp != ""):
             bmp  = resman.Bitmap(self.Bmp)
-            if self.Bmp2<>"":
+            if self.Bmp2 != "":
                 bmp2 = resman.Bitmap(self.Bmp2)
                 mi.SetBitmaps(bmp, bmp2)
             else:
@@ -80,7 +79,7 @@ class Command(object):
         return mi
     
     def CreateTool(self, tb):
-        if self.Type <> CMD_SUB:
+        if self.Type != CMD_SUB:
             resman = _get_resman()
             im = resman.Bitmap(self.Bmp)
             if self.Type == CMD_CHECK:

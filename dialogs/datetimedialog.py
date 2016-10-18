@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import datetime
-import wx
-from datedialog import get_wxdate, get_pydate
-from timedialog import _K_RANGE24, _K_RANGE60
+import wx, wx.adv
+from .datedialog import get_wxdate, get_pydate
+from .timedialog import _K_RANGE24, _K_RANGE60
 
-CTRLDICT_DATE_DEF_STYLE = dict(size=(150,-1), style=wx.DP_DROPDOWN|wx.DP_SHOWCENTURY)
+CTRLDICT_DATE_DEF_STYLE = dict(size=(150,-1), style=wx.adv.DP_DROPDOWN|wx.adv.DP_SHOWCENTURY)
+
 #-----------------------------------------------------------------------------------------
 
 __all__ = ['format_datetime', 'GetDateTimeDialog', 'DateTimeGetter', 'get_datetime']
