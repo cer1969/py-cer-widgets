@@ -1,6 +1,5 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
 import glob, os, py_compile
 import wx
 from .resource import get_font_data, get_file_data, get_image_data
@@ -65,7 +64,7 @@ class ResourceMaker(object):
     def AddStringPyFile(self, filename):
         """Agrega o reemplaza strings de archivo con sintaxis de Python"""
         mydict = {}
-        execfile(filename, {}, mydict)
+        exec(compile(open(filename).read(), filename, 'exec'), {}, mydict)
         self._strData.update(mydict)
 
     def AddStringDir(self, strdir, fullName=True):
@@ -144,32 +143,32 @@ class ResourceMaker(object):
         """
         # datos de imágenes
         txtImg = "imgData = {}\n"
-        for name, args in self._imgData.items():
+        for name, args in list(self._imgData.items()):
             data = get_image_data(*args)
             txt = "imgData['%s'] = %s\n" % (name, repr(data))
             txtImg = txtImg + txt
 
         # datos de ImageList
         txtImgList = "imgListData = {}\n"
-        for name, data in self._imgListData.items():
+        for name, data in list(self._imgListData.items()):
             txt = "imgListData['%s'] = %s\n" % (name, data)
             txtImgList = txtImgList + txt
 
         # datos de Strings
         txtStr = "strData = {}\n"
-        for name, texto in self._strData.items():
+        for name, texto in list(self._strData.items()):
             txt = "strData['%s'] = %s\n" % (name, repr(texto))
             txtStr = txtStr + txt
 
         # datos de Fuentes
         txtFont = "fontData = {}\n"
-        for name, font in self._fontData.items():
+        for name, font in list(self._fontData.items()):
             txt = "fontData['%s'] = %s\n" % (name, font)
             txtFont = txtFont + txt
 
         sal = RES_TEMPLATE % (txtImg, txtImgList, txtStr, txtFont)
 
-        f = open(filename, "w")
+        f = open(filename, "w", encoding="utf-8")
         f.write(sal)
         f.close()
 
@@ -179,9 +178,9 @@ class ResourceMaker(object):
 #-----------------------------------------------------------------------------------------
 # Plantilla de archivo de recursos
 
-RES_TEMPLATE = """# -*- coding: utf-8 -*-
-# CRISTIAN ECHEVERRÍA RABÍ
-# Archivo de recursos creado usando cg.ResourceMaker
+RES_TEMPLATE = """# CRISTIAN ECHEVERRÍA RABÍ
+# Archivo de recursos creado usando cx.ResourceMaker
+
 from cer.widgets.resource import ResourceManager
 
 #-----------------------------------------------------------------------------------------
@@ -210,10 +209,3 @@ RESNUVOLA = ResourceMaker()
 RESNUVOLA.AddStdImageDir("nuvola", "*.bmp", "#804000")
 RESNUVOLA.AddStdImageDir("nuvola", "*.png", raw=True)
 RESNUVOLA.AddStdFonts()
-
-#-----------------------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    RESJAVA.Make("rxjava.py")
-    RESWX.Make("rxwx.py")
-    RESNUVOLA.Make("rxnuvola.py")

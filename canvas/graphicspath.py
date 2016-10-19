@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
+
 import math
-from scalable import Scalable
+from .scalable import Scalable
 
 #-----------------------------------------------------------------------------------------
 
@@ -57,7 +56,7 @@ class GraphicsPath(Scalable):
         px1, py1 = self.getPoint(x1, y1)
         px2, py2 = self.getPoint(x2, y2)
         pradius = self.getRadius(radius)
-        print "Path.AddArcToPoint: Requiere revisión"
+        print("Path.AddArcToPoint: Requiere revisión")
         self.gp.AddArcToPoint(px1, py1, px2, py2, pradius)
     
     def AddCircle(self, x, y, radius):

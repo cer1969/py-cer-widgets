@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
+
 import math
 import wx
 
-from scalable import Scalable
-from graphicspath import GraphicsPath
+from .scalable import Scalable
+from .graphicspath import GraphicsPath
 
 #-----------------------------------------------------------------------------------------
 
@@ -94,7 +93,7 @@ class GraphicsContext(Scalable):
             px = px + pxgap - (pw/2)*math.cos(angle) - ph*math.sin(angle)
             py = py + pygap + (pw/2)*math.sin(angle) - ph*math.cos(angle)
         
-        self.gc.DrawRotatedText(str, px, py, angle, brush)
+        self.gc.DrawText(str, px, py, angle, brush)
     
     #-------------------------------------------------------------------------------------
     # Overwritted methods
@@ -113,7 +112,7 @@ class GraphicsContext(Scalable):
     def Clip(self, x1, y1, x2, y2):
         px1, py1 = self.getPoint(x1, y1)
         px2, py2 = self.getPoint(x2, y2)
-        print self.gc.Clip(px1, py1, px2, py2)
+        print(self.gc.Clip(px1, py1, px2, py2))
     
     def DrawBitmap(self, bitmap, x, y, w, h):
         self.gc.DrawBitmap(bitmap, *self.getRectangle(x, y, w, h)[:4])
@@ -137,7 +136,8 @@ class GraphicsContext(Scalable):
         brush    : Background brush
         """
         px, py = self.getPoint(x, y) 
-        self.gc.DrawRotatedText(str, px, py, math.radians(angle), brush)
+        #self.gc.DrawRotatedText(str, px, py, math.radians(angle), brush)
+        self.gc.DrawText(str, px, py, math.radians(angle), brush)
     
     def PushState(self):
         self.gc.PushState()

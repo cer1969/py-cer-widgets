@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
+
 import math
 import wx
 
-from affinematrix import AffineMatrix 
+from .affinematrix import AffineMatrix 
 
 #-----------------------------------------------------------------------------------------
 

@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from __future__ import division
+
 import wx, time
 from cer.widgets import canvas
 
@@ -11,14 +10,14 @@ class MyCanvas(canvas.Canvas):
     
     def Draw(self, dc):
         
-        dc.BeginDrawing()
+        #>dc.BeginDrawing()
         dc.SetBackground(wx.WHITE_BRUSH)
         dc.Clear()
         
         dc = wx.GCDC(dc)
         adc = canvas.AffineDC(dc)
         
-        psize = self.GetClientSizeTuple()
+        psize = self.ClientSize
         adc.SetMatrixFromFrame((0,0), (10,10), psize, (50,50,50,50))
         #adc.SetMatrixFromFrame((0,psize[1]), (psize[0],0), psize, (0,0,0,0))
         
@@ -35,7 +34,7 @@ class MyCanvas(canvas.Canvas):
         #                                      wx.Colour(255, 255, 174, 70),
         #                                      wx.Colour(255, 117, 140, 40))
         
-        adc.SetPen(wx.Pen(wx.NamedColour('GRAY50'), 1, wx.SOLID))
+        adc.SetPen(wx.Pen(wx.Colour('GRAY50'), 1, wx.SOLID))
         adc.SetBrush(wx.Brush(wx.Colour(255, 255, 219)))
         #adc.Scale(0.8, 1.0)
         adc.Translate(3, 0)
@@ -54,7 +53,7 @@ class MyCanvas(canvas.Canvas):
             # Valores de x en y = 10 usando anchor wx.LEFT y angle=90° (coordenadas cartesianas)
             adc.DrawAncText("%d" % i, i, 10, 90, wx.LEFT, pxgap=0,  pygap=-10)
         
-        adc.SetPen(wx.Pen(wx.NamedColour('BLUE'), 2, wx.SOLID))
+        adc.SetPen(wx.Pen(wx.Colour('BLUE'), 2, wx.SOLID))
         adc.SetBrush(wx.Brush(wx.Colour(121, 219, 255)))
         
         adc.DrawLine(0, 0, 1, 1)
@@ -63,7 +62,7 @@ class MyCanvas(canvas.Canvas):
         adc.DrawRectangle(6, 6, 2, 2)
         
         adc.PushState()
-        adc.SetPen(wx.Pen(wx.NamedColour('RED'), 1, wx.SOLID))
+        adc.SetPen(wx.Pen(wx.Colour('RED'), 1, wx.SOLID))
         adc.SetBrush(wx.Brush(wx.Colour(216, 89, 255, 100), wx.CROSSDIAG_HATCH))
         adc.Translate(6, 1)
         adc.DrawCircle(1, 2, 2)
@@ -71,7 +70,7 @@ class MyCanvas(canvas.Canvas):
         adc.DrawEllipse(1, 2, 2, 2)
         adc.PopState()
         
-        #adc.SetPen(wx.Pen(wx.NamedColour('BLUE'), 1, wx.SOLID))
+        #adc.SetPen(wx.Pen(wx.Colour('BLUE'), 1, wx.SOLID))
         #adc.SetBrush(wx.Brush(wx.Colour(34,  34,  178, 100)))
         
         #bitmap = wx.Bitmap("transelec.png")
@@ -103,7 +102,7 @@ class MyCanvas(canvas.Canvas):
         #adc.DrawPath(path)
         #adc.Translate(5, 5)
         #adc.FillPath(path)
-        dc.EndDrawing()
+        #>dc.EndDrawing()
 
 #- <00> -----------------------------------------------------------------------
 
@@ -113,7 +112,7 @@ class MainFrame(wx.Frame):
         
         self.canvas = MyCanvas(self)
         self.CreateStatusBar()
-        self.SetClientSizeWH(500, 500)
+        self.SetClientSize(500, 500)
         
         box = wx.BoxSizer(wx.VERTICAL)
         box.Add(self.canvas, 0, wx.LEFT|wx.TOP, 0)
@@ -128,19 +127,19 @@ class MainFrame(wx.Frame):
         #self.OnSize()
         #wx.FutureCall(2000, self.ShowMessage) # se puede pasar args
         
-        print "Inicio: %f" % time.clock()
+        print("Inicio: %f" % time.clock())
 
     def OnSize(self, event=None):
-        s = min(self.GetClientSizeTuple())
-        self.canvas.SetClientSizeWH(s, s)
-        print "New size: %s" % s
+        s = min(self.ClientSize)
+        self.canvas.SetClientSize(s, s)
+        print("New size: %s" % s)
         
     def ShowMessage(self):
         msg = "Fin: %f" % time.clock()
         wx.MessageBox(msg, 'Mensaje')
         
     def OnCloseWindow(self, event=None):
-        print "Maximized: %s" % self.IsMaximized()
+        print("Maximized: %s" % self.IsMaximized())
         self.Destroy()
 
 
@@ -148,8 +147,8 @@ class MainFrame(wx.Frame):
 
 if __name__ == '__main__':
     from wx.lib import colourdb
-    app = wx.PySimpleApp(False)     # True para capturar stderr y stdout
-    app.SetAssertMode(wx.PYAPP_ASSERT_DIALOG)
+    app = wx.App(False)     # True para capturar stderr y stdout
+    app.SetAssertMode(wx.APP_ASSERT_DIALOG)
     colourdb.updateColourDB()
     MainFrame().Show(True)
     app.MainLoop()

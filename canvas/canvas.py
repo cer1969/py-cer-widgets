@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
+
 import wx
 
 #-----------------------------------------------------------------------------------------
@@ -25,8 +24,8 @@ class Canvas(wx.Window):
         _dc = wx.BufferedPaintDC(self, self.buffer)
     
     def _onSize(self, event=None):
-        size  = self.GetClientSizeTuple()
-        self.buffer = wx.EmptyBitmap(*size)
+        size  = self.ClientSize
+        self.buffer = wx.Bitmap(*size)
         self.UpdateDrawing()
     
     def UpdateDrawing(self):

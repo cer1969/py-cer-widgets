@@ -1,6 +1,5 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
 import wx, os, io
 
 #-----------------------------------------------------------------------------------------
@@ -149,8 +148,8 @@ if __name__ == "__main__":
     data = get_image_data("Nuvola/cw_tb_tabla.bmp","#804000")
 
     imr = ImageResource(data)
-    print (imr.Image)
-    print (imr.Icon)
+    print(imr.Image)
+    print(imr.Icon)
     
     fnr = FontResource("Tahoma",8,wx.BOLD)
-    print (fnr.Font)
+    print(fnr.Font)

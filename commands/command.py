@@ -64,8 +64,10 @@ class Command(object):
     def CreateMenu(self, menu):
         if self.Type == CMD_SUB:
             m = self.Sub.Make()
-            mi = wx.MenuItem(menu, -1, self.Sub.Title, subMenu=m)
+            #mi = menu.AppendSubMenu(m, self.Sub.Title)
+            mi = wx.MenuItem(menu, wx.NewId(), self.Sub.Title, subMenu=m)
         else:
+            #mi = menu.Append(self.Id, self.Text, self.Help, self.Type)
             mi = wx.MenuItem(menu, self.Id, self.Text, self.Help, self.Type)
         
         resman = _get_resman()
@@ -83,12 +85,12 @@ class Command(object):
             resman = _get_resman()
             im = resman.Bitmap(self.Bmp)
             if self.Type == CMD_CHECK:
-                tb.AddCheckTool(self.Id, im, shortHelp=self.Text, longHelp=self.Help)
+                tb.AddCheckTool(self.Id, "", im, shortHelp=self.Text, longHelp=self.Help)
             elif self.Type == CMD_RADIO:
-                tb.AddRadioTool(self.Id, im, shortHelp=self.Text, longHelp=self.Help)
+                tb.AddRadioTool(self.Id, "", im, shortHelp=self.Text, longHelp=self.Help)
             else:
-                tb.AddLabelTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
-                #tb.AddTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
+                #tb.AddLabelTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
+                tb.AddTool(self.Id, self.Text, im, im, shortHelpString=self.Text, longHelpString=self.Help)
 
 #-----------------------------------------------------------------------------------------
 
