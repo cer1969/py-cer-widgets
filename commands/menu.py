@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
 import wx
@@ -27,10 +26,11 @@ class Menu(list):
         m = wx.Menu()
         for item in self:
             if item is None:
-                m.AppendItem(wx.MenuItem(m, wx.ID_SEPARATOR))
+                #m.Append(wx.MenuItem(m, wx.ID_SEPARATOR))
+                m.AppendSeparator()
             else:
                 mi = item.CreateMenu(m)
-                m.AppendItem(mi)
+                m.Append(mi)
         return m
 
 #-----------------------------------------------------------------------------------------

@@ -48,8 +48,11 @@ class AboutDialog(wx.Dialog):
         okBut = wx.Button(self,wx.ID_OK,"Ok")
         okBut.SetDefault()
         box.Add(okBut,0,wx.CENTER|wx.LEFT|wx.RIGHT|wx.BOTTOM,10)
-        wx.EVT_BUTTON(self,wx.ID_OK,self.OnOk)
-        wx.EVT_BUTTON(self,wx.ID_CANCEL,self.OnCancel)
+        
+        self.Bind(wx.EVT_BUTTON, self.OnOk, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, id=wx.ID_CANCEL)
+        #wx.EVT_BUTTON(self,wx.ID_OK,self.OnOk)
+        #wx.EVT_BUTTON(self,wx.ID_CANCEL,self.OnCancel)
 
         self.SetSizer(box)
         box.SetSizeHints(self)

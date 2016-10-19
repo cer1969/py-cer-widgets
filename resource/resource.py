@@ -124,19 +124,19 @@ class ImageResource(Resource):
     def _getImage(self):
         if self._img is None:
             stream = io.BytesIO(self.Data)
-            self._img = wx.ImageFromStream(stream)
+            self._img = wx.Image(stream)
         return self._img
     Image = property(_getImage)
 
     def _getBitmap(self):
         if self._bmp is None:
-            self._bmp = wx.BitmapFromImage(self.Image)
+            self._bmp = wx.Bitmap(self.Image)
         return self._bmp
     Bitmap = property(_getBitmap)
     
     def _getIcon(self):
         if self._ico is None:
-            icon = wx.EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(self.Bitmap)
             self._ico = icon
         return self._ico

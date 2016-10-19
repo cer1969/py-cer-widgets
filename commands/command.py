@@ -87,8 +87,8 @@ class Command(object):
             elif self.Type == CMD_RADIO:
                 tb.AddRadioTool(self.Id, im, shortHelp=self.Text, longHelp=self.Help)
             else:
-                tb.AddLabelTool(self.Id, self.Text, im, shortHelp=self.Text, 
-                                longHelp=self.Help)
+                tb.AddLabelTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
+                #tb.AddTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
 
 #-----------------------------------------------------------------------------------------
 
