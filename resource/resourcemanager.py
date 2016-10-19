@@ -16,7 +16,7 @@ class ResourceManager(object):
     def __init__(self, imgData={}, imgListData={}, strData={}, fontData={}):
         
         imgs = {}
-        for name, data in imgData.items():
+        for name, data in list(imgData.items()):
             imgs[name] = ImageResource(data)
         self._imgs = imgs
         
@@ -24,12 +24,12 @@ class ResourceManager(object):
         self._imgLists = {}
         
         strs = {}
-        for name, data in strData.items():
+        for name, data in list(strData.items()):
             strs[name] = Resource(data)
         self._strs = strs
         
         fonts = {}
-        for name, data in fontData.items():
+        for name, data in list(fontData.items()):
             fonts[name] = FontResource(*data)
         self._fonts = fonts
     
@@ -63,7 +63,7 @@ class ResourceManager(object):
             return self._imgs[name].Icon
         else:
             bmp = self.Bitmap(name, size)
-            icon = wx.EmptyIcon()
+            icon = wx.Icon()
             icon.CopyFromBitmap(bmp)
             return icon
     

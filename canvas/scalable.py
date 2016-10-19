@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
+
 
 #-----------------------------------------------------------------------------------------
 

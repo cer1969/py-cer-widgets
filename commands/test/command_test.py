@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
 import wx
@@ -16,7 +15,7 @@ cmd_savas = cmd.Item("Grabar como...", "Test", "cw_file_save_as")
 cmd_hdtb2 = cmd.Item("Oculta ToolBar2\tAlt-H", "HideTool2")
 cmd_swtb2 = cmd.Item("Muestra ToolBar2\tAlt-S", "ShowTool2")
 
-cmd_exit  = cmd.Item("&Salir", "OnCloseWindow", "cw_quit", u"Fin aplicación")
+cmd_exit  = cmd.Item("&Salir", "OnCloseWindow", "cw_quit", "Fin aplicación")
 
 cmd_check = cmd.Check("Check", "Test", "cw_tip", bmp2="cw_file_save")
 cmd_rad01 = cmd.Radio("Opcion1", "Test")
@@ -45,7 +44,8 @@ mbd = cw.MenuBar(
     cw.Menu("Test",
             cmd_rad01,cmd_rad02,cmd_rad03),
     cw.Menu("Ayuda",
-            cmd_subm, cmd_hdtb2, cmd_swtb2, cmd_exit)
+            #cmd_subm, cmd_hdtb2, cmd_swtb2, cmd_exit)  # NO FUNCIONA SUBMENU
+            cmd_hdtb2, cmd_swtb2, cmd_exit)
 )
 
 #-----------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ tbd2 = cw.ToolBar(wx.TB_VERTICAL, (16, 16),
 #-----------------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    print cmd
+    print(cmd)
     c = tbd.GetTool(cmd_tabla.Id)
-    print c.Args
-    print cw.CMD_ITEM, cw.CMD_CHECK, cw.CMD_RADIO, cw.CMD_SUB
+    print(c.Args)
+    print(cw.CMD_ITEM, cw.CMD_CHECK, cw.CMD_RADIO, cw.CMD_SUB)

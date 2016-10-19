@@ -63,7 +63,7 @@ class DataCtrl(wx.TextCtrl):
         try:
             _value = self._cerval.getData(text)
         except ValueError as e:
-            wx.MessageBox(e[0], "Error", wx.ICON_ERROR|wx.OK, parent=self)
+            wx.MessageBox(str(e), "Error", wx.ICON_ERROR|wx.OK, parent=self)
             self.SetBackgroundColour("Yellow")
             self.FocusControl()
             return False

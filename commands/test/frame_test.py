@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ  
 
 import wx
@@ -14,7 +13,7 @@ CHEVE_ESTILO = wx.DEFAULT_FRAME_STYLE|wx.CLIP_CHILDREN
 class MainFrame(wx.Frame):
     
     def __init__(self):
-        wx.Frame.__init__(self,None,-1,u"Parábola",size=(700,550),style=CHEVE_ESTILO)
+        wx.Frame.__init__(self,None,-1,"Parábola",size=(700,550),style=CHEVE_ESTILO)
 
         self.SetMenuBar(mbd.Make())
         self.SetToolBar(tbd.Make(self))
@@ -53,7 +52,7 @@ class MainFrame(wx.Frame):
 
     def Test(self,event=None):
         idx = event.GetId()
-        print idx
+        print(idx)
         #tb = self.GetToolBar()
         #print tb.GetToolState(idx)
         #if idx in tbd.ArgsDict:
@@ -80,9 +79,9 @@ if __name__ == '__main__':
     
     #from wx.lib import colourdb
     #print wx.PlatformInfo
-    app = wx.PySimpleApp(False)     # True para capturar stderr y stdout
+    app = wx.App(False)     # True para capturar stderr y stdout
     app.resman = resman
-    app.SetAssertMode(wx.PYAPP_ASSERT_DIALOG)
+    app.SetAssertMode(wx.APP_ASSERT_DIALOG)
     #colourdb.updateColourDB()
     MainFrame().Show(True)
     app.MainLoop()

@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from __future__ import division
+
 import wx, time
 from cer.widgets import canvas
 
@@ -11,18 +10,18 @@ class MyCanvas(canvas.Canvas):
     
     def Draw(self, dc):
         
-        dc.BeginDrawing()
+        #>dc.BeginDrawing()
         dc.SetBackground(wx.WHITE_BRUSH)
         dc.Clear()
         
         gc = canvas.GraphicsContext(dc)
         
-        psize = self.GetClientSizeTuple()
+        psize = self.ClientSize
         gc.SetMatrixFromFrame((0,0), (10,10), psize, (50,50,50,50))
         
         font = wx.SystemSettings.GetFont(wx.SYS_DEFAULT_GUI_FONT)
         #font.SetPointSize(9)
-        gc.SetFont(font)
+        gc.SetFont(font, "RED")
         
         brush = gc.CreateLinearGradientBrush(0, 0, 2, 2,
                                               wx.Colour(255, 255, 174, 70),
@@ -32,7 +31,7 @@ class MyCanvas(canvas.Canvas):
         #                                     wx.Colour(255, 255, 174, 70),
         #                                     wx.Colour(255, 117, 140, 40))
         
-        gc.SetPen(wx.Pen(wx.NamedColour('GRAY50'), 1, wx.SOLID))
+        gc.SetPen(wx.Pen(wx.Colour('GRAY50'), 1, wx.SOLID))
         gc.SetBrush(brush)
         #gc.Translate(2, 0)
         #gc.Rotate(-45)
@@ -51,7 +50,7 @@ class MyCanvas(canvas.Canvas):
             # Valores de x en y = 10 usando anchor wx.LEFT y angle=90° (coordenadas cartesianas)
             gc.DrawAncText("%d" % i, i, 10, 90, wx.LEFT, pxgap=0,  pygap=-10)
         
-        gc.SetPen(wx.Pen(wx.NamedColour('BLUE'), 1, wx.SOLID))
+        gc.SetPen(wx.Pen(wx.Colour('BLUE'), 1, wx.SOLID))
         gc.SetBrush(wx.Brush(wx.Colour(34,  34,  178, 100)))
         
         
@@ -61,14 +60,14 @@ class MyCanvas(canvas.Canvas):
         gc.DrawRectangle(6, 6, 2, 2)
         
         gc.PushState()
-        gc.SetPen(wx.Pen(wx.NamedColour('RED'), 1, wx.SOLID))
+        gc.SetPen(wx.Pen(wx.Colour('RED'), 1, wx.SOLID))
         gc.SetBrush(wx.Brush(wx.Colour(216, 89, 255, 100)))
         gc.Translate(6, 1)
         gc.DrawEllipse(1, 1, 2, 2)
         gc.DrawEllipse(1, 2, 2, 2)
         gc.PopState()
         
-        gc.SetPen(wx.Pen(wx.NamedColour('BLUE'), 1, wx.SOLID))
+        gc.SetPen(wx.Pen(wx.Colour('BLUE'), 1, wx.SOLID))
         gc.SetBrush(wx.Brush(wx.Colour(34,  34,  178, 100)))
         
         bitmap = wx.Bitmap("transelec.png")
@@ -97,7 +96,7 @@ class MyCanvas(canvas.Canvas):
         gc.DrawPath(path)
         gc.Translate(5, 5)
         gc.FillPath(path, wx.WINDING_RULE) #wx.ODDEVEN_RULE
-        dc.EndDrawing()
+        #>dc.EndDrawing()
 
 #- <00> -----------------------------------------------------------------------
 
@@ -107,7 +106,7 @@ class MainFrame(wx.Frame):
         
         self.canvas = MyCanvas(self)
         self.CreateStatusBar()
-        self.SetClientSizeWH(500, 500)
+        self.SetClientSize(500, 500)
         
         box = wx.BoxSizer(wx.VERTICAL)
         box.Add(self.canvas, 0, wx.LEFT|wx.TOP, 0)
@@ -122,19 +121,19 @@ class MainFrame(wx.Frame):
         #self.OnSize()
         #wx.FutureCall(2000, self.ShowMessage) # se puede pasar args
         
-        print "Inicio: %f" % time.clock()
+        print("Inicio: %f" % time.clock())
 
     def OnSize(self, event=None):
-        s = min(self.GetClientSizeTuple())
-        self.canvas.SetClientSizeWH(s, s)
-        print "New size: %s" % s
+        s = min(self.ClientSize)
+        self.canvas.SetClientSize(s, s)
+        print("New size: %s" % s)
         
     def ShowMessage(self):
         msg = "Fin: %f" % time.clock()
         wx.MessageBox(msg, 'Mensaje')
         
     def OnCloseWindow(self, event=None):
-        print "Maximized: %s" % self.IsMaximized()
+        print("Maximized: %s" % self.IsMaximized())
         self.Destroy()
 
 
@@ -142,8 +141,8 @@ class MainFrame(wx.Frame):
 
 if __name__ == '__main__':
     from wx.lib import colourdb
-    app = wx.PySimpleApp(False)     # True para capturar stderr y stdout
-    app.SetAssertMode(wx.PYAPP_ASSERT_DIALOG)
+    app = wx.App(False)     # True para capturar stderr y stdout
+    app.SetAssertMode(wx.APP_ASSERT_DIALOG)
     colourdb.updateColourDB()
     MainFrame().Show(True)
     app.MainLoop()
