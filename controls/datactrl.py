@@ -8,7 +8,7 @@ __all__ = ['DataCtrl']
 
 #-----------------------------------------------------------------------------------------
 
-class _ThisValidator(wx.PyValidator):
+class _ThisValidator(wx.Validator):
     # Validator para DataCtrl: Delega todo en el DataCtrl"""
     
     def Validate(self, win):
