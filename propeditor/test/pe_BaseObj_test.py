@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from __future__ import division
 import wx
 from cer.widgets import cw
 import cer.widgets.propeditor as pe
@@ -97,12 +95,12 @@ class MainFrame(wx.Frame):
     def Test(self, event):
         ctrl = event.Ctrl
         name = event.Item.Name
-        print "Cambia valor de la propiedad %s" % name
-        print ctrl.Obj
+        print("Cambia valor de la propiedad %s" % name)
+        print(ctrl.Obj)
         if name == "Peso":
             ctrl.SetEdit(ctrl.Data[2][1], False)
             #ctrl.SetEdit(ctrl.Data[2], False)
-            print ctrl.Data[2][1].Edit
+            print(ctrl.Data[2][1].Edit)
             ctrl.UpdateFormats()
 
 #-----------------------------------------------------------------------------------------
@@ -111,8 +109,8 @@ if __name__ == '__main__':
     
     from wx.lib import colourdb
 
-    app = wx.PySimpleApp(False)     # True para capturar stderr y stdout
-    app.SetAssertMode(wx.PYAPP_ASSERT_DIALOG)
+    app = wx.App(False)     # True para capturar stderr y stdout
+    app.SetAssertMode(wx.APP_ASSERT_DIALOG)
     colourdb.updateColourDB()
     MainFrame().Show(True)
     app.MainLoop()

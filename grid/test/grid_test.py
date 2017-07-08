@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from __future__ import division
 import wx
 from cer.widgets import cw
 import wx.grid as gridlib
@@ -73,7 +71,7 @@ class MainFrame(wx.Frame):
         
         cmd.Bind(self)
         self.Center(wx.BOTH)
-        wx.EVT_SIZE(self, self.OnSize)
+        self.Bind(wx.EVT_SIZE, self.OnSize)
     
     def OnSize(self, event):
         self.p.AdjustScrollbars()
@@ -115,7 +113,7 @@ class MainFrame(wx.Frame):
                 r.append(datamodel.GetValue(row, col))
             sal.append(r)
         for i in sal:
-            print i
+            print(i)
 
 #-----------------------------------------------------------------------------------------
 # Test code
@@ -124,10 +122,10 @@ if __name__ == '__main__':
     
     from wx.lib import colourdb
     
-    app = wx.PySimpleApp(False)     # True para capturar stderr y stdout
+    app = wx.App(False)     # True para capturar stderr y stdout
     app.resman = resman
     
     colourdb.updateColourDB()
-    app.SetAssertMode(wx.PYAPP_ASSERT_DIALOG)
+    app.SetAssertMode(wx.APP_ASSERT_DIALOG)
     MainFrame().Show(True)
     app.MainLoop()
