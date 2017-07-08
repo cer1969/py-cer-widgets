@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ
 
-from __future__ import division
 import wx.grid as grid
 
 #-----------------------------------------------------------------------------------------
@@ -67,9 +65,9 @@ class Choice(Header):
 #-----------------------------------------------------------------------------------------
 # Class DataModel
 
-class DataModel(grid.PyGridTableBase):
+class DataModel(grid.GridTableBase):
     def __init__(self):
-        grid.PyGridTableBase.__init__(self)
+        grid.GridTableBase.__init__(self)
     
     #-------------------------------------------------------------------------------------
     # Métodos requeridos por wx.PyGridTableBase
@@ -178,15 +176,18 @@ class TableDataModel(DataModel):
         data = numRows*[defValues]
         for i in data:
             self.__data.append(i)
+        return True
     
     def DeleteRows(self, pos=0, numRows=1):
         del(self.__data[pos:pos+numRows])
+        return True
     
     def InsertRows(self, pos=0, numRows=1):
         defValues = [header.defval for header in self.Headers]
         data = numRows*[defValues]
         for i in data:
             self.__data.insert(pos,i)
+        return True
     
     #--------------------------------------------------
     # Métodos CER
