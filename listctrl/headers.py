@@ -12,7 +12,7 @@ class Text(object):
     
     __slots__ = ('_text', '_width', '_align', 'format', 'attr', 'pos', 'ctrl')
     
-    def __init__(self, text, width=wx.LIST_AUTOSIZE_USEHEADER, align=wx.LIST_FORMAT_LEFT,
+    def __init__(self, text, width=wx.LIST_AUTOSIZE, align=wx.LIST_FORMAT_LEFT,
                  format="%s", attr=None):
         
         self._text = text
@@ -90,7 +90,7 @@ class Number(Text):
     
     __slots__ = ()
     
-    def __init__(self, text, width=wx.LIST_AUTOSIZE_USEHEADER, align=wx.LIST_FORMAT_RIGHT,
+    def __init__(self, text, width=wx.LIST_AUTOSIZE, align=wx.LIST_FORMAT_RIGHT,
                  format="%d", attr=None):
         Text.__init__(self, text, width, align, format, attr)
 
@@ -101,7 +101,7 @@ class DateTime(Text):
     
     __slots__ = ()
     
-    def __init__(self, text, width=wx.LIST_AUTOSIZE_USEHEADER, align=wx.LIST_FORMAT_RIGHT,
+    def __init__(self, text, width=wx.LIST_AUTOSIZE, align=wx.LIST_FORMAT_RIGHT,
                  format="%d/%m/%y - %H:%M", attr=None):
         Text.__init__(self, text, width, align, format, attr)
     

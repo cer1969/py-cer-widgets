@@ -37,7 +37,7 @@ class GetDateTimeDialog(wx.Dialog):
         _vmin = datetime.date.min if vmin is None else vmin
         _vmax = datetime.date.max if vmax is None else vmax
         _size = (150, -1) if ctrlSize is None else ctrlSize
-        _style = wx.DP_DROPDOWN|wx.DP_SHOWCENTURY if ctrlStyle is None else ctrlStyle
+        _style = wx.adv.DP_DROPDOWN|wx.adv.DP_SHOWCENTURY if ctrlStyle is None else ctrlStyle
         self.UseSecs = useSecs
         _msg = title if msg is None else msg
         
@@ -50,7 +50,7 @@ class GetDateTimeDialog(wx.Dialog):
         
         # Date
         _date = get_wxdate(_value)
-        self.ctrl = wx.DatePickerCtrl(self, -1, _date, size=_size, style=_style)
+        self.ctrl = wx.adv.DatePickerCtrl(self, -1, _date, size=_size, style=_style)
         self.ctrl.SetRange(get_wxdate(_vmin), get_wxdate(_vmax))
         box.Add(self.ctrl, 0, wx.EXPAND|wx.LEFT|wx.RIGHT|wx.BOTTOM, 10)
         
@@ -72,7 +72,6 @@ class GetDateTimeDialog(wx.Dialog):
         
         box.Add(box1, 0, wx.EXPAND|wx.LEFT|wx.RIGHT, 10)
         
-        
         oksizer = wx.BoxSizer(wx.HORIZONTAL)
         okbut = wx.Button(self, wx.ID_OK, "Ok")
         okbut.SetDefault()
@@ -85,8 +84,8 @@ class GetDateTimeDialog(wx.Dialog):
         box.Fit(self)
         box.SetSizeHints(self)
         
-        wx.EVT_BUTTON(self, wx.ID_OK, self.OnOk)
-        wx.EVT_BUTTON(self, wx.ID_CANCEL, self.OnCancel)
+        self.Bind(wx.EVT_BUTTON, self.OnOk, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, id=wx.ID_CANCEL)
         
         self.SetTime(_value)
         self.CentreOnParent(wx.BOTH)

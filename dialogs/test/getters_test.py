@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # CRISTIAN ECHEVERRÍA RABÍ 
 
-from __future__ import division
 import wx
 from cer.widgets import cw
 
@@ -9,11 +7,11 @@ from cer.widgets import cw
 
 def show(value):
     if value is None:
-        print "-- CANCELADO --"
-    elif type(value) is unicode:
-        print value.encode("Latin-1")
+        print ("-- CANCELADO --")
+    elif type(value) is str:
+        print (value.encode("Latin-1"))
     else:
-        print value
+        print (value)
 
 #-----------------------------------------------------------------------------------------
 
@@ -25,7 +23,7 @@ show(mt)
 
 value = cw.get_choice(None, [1,2,3,4], "Choice Test", msg="Selecciona")
 if value:
-    print value + 100
+    print (value + 100)
 
 date = cw.get_date(None, "Test Date", msg="Fecha de Nacimiento")
 show(date)
