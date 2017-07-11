@@ -14,7 +14,7 @@ def get_wxdate(myDate):
     """Retorna wx.DateTime object
     myDate: datetime.date object.
     """
-    return wx.DateTimeFromDMY(myDate.day,myDate.month-1,myDate.year)
+    return wx.DateTime.FromDMY(myDate.day,myDate.month-1,myDate.year)
 
 def get_pydate(myDate):
     """Retorna datetime.date object
@@ -47,7 +47,7 @@ class GetDateDialog(wx.Dialog):
         _vmin = datetime.date.min if vmin is None else vmin
         _vmax = datetime.date.max if vmax is None else vmax
         _size = (150, -1) if ctrlSize is None else ctrlSize
-        _style = wx.DP_DROPDOWN|wx.DP_SHOWCENTURY if ctrlStyle is None else ctrlStyle
+        _style = wx.adv.DP_DROPDOWN|wx.adv.DP_SHOWCENTURY if ctrlStyle is None else ctrlStyle
         _msg = title if msg is None else msg
         
         box = wx.BoxSizer(wx.VERTICAL)
@@ -57,7 +57,7 @@ class GetDateDialog(wx.Dialog):
         
         _value = datetime.date.today() if (value is None) else value
         _date = get_wxdate(_value)
-        self.ctrl = wx.DatePickerCtrl(self, -1, _date, size=_size, style=_style)
+        self.ctrl = wx.adv.DatePickerCtrl(self, -1, _date, size=_size, style=_style)
         self.ctrl.SetRange(get_wxdate(_vmin), get_wxdate(_vmax))
         box.Add(self.ctrl, 0, wx.EXPAND|wx.LEFT|wx.RIGHT, 10)
         
@@ -73,8 +73,8 @@ class GetDateDialog(wx.Dialog):
         box.Fit(self)
         box.SetSizeHints(self)
         
-        wx.EVT_BUTTON(self, wx.ID_OK, self.OnOk)
-        wx.EVT_BUTTON(self, wx.ID_CANCEL, self.OnCancel)
+        self.Bind(wx.EVT_BUTTON, self.OnOk, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, id=wx.ID_CANCEL)
         
         self.CentreOnParent(wx.BOTH)
     

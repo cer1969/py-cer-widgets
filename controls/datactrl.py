@@ -54,7 +54,7 @@ class DataCtrl(wx.TextCtrl):
         if chr(key) in self._cerval.chars:
             event.Skip()
             return
-        if not wx.Validator_IsSilent():
+        if not wx.Validator.IsSilent():
             wx.Bell()
         return
     

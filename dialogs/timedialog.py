@@ -48,14 +48,12 @@ class GetTimeDialog(wx.Dialog):
         
         box1 = wx.BoxSizer(wx.HORIZONTAL)
         box1.Add(self._h_ctrl, 0, wx.ALL, 0)
-        box1.Add(wx.StaticText(self,-1,":"), 0, 
-                 wx.LEFT|wx.RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
+        box1.Add(wx.StaticText(self,-1,":"), 0, wx.LEFT|wx.RIGHT|wx.ALIGN_CENTER_VERTICAL, 2)
         box1.Add(self._m_ctrl, 0, wx.ALL,0)
         
         if useSecs:
             self._s_ctrl = wx.Choice(self, choices=_K_RANGE60)
-            box1.Add(wx.StaticText(self,-1,":"), 0, 
-                     wx.LEFT|wx.RIGHT|wx.ALIGN_CENTER_VERTICAL,2)
+            box1.Add(wx.StaticText(self,-1,":"), 0, wx.LEFT|wx.RIGHT|wx.ALIGN_CENTER_VERTICAL,2)
             box1.Add(self._s_ctrl, 0, wx.ALL, 0)
         
         box.Add(box1, 0, wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT, 10)
@@ -72,8 +70,8 @@ class GetTimeDialog(wx.Dialog):
         box.Fit(self)
         box.SetSizeHints(self)
         
-        wx.EVT_BUTTON(self,wx.ID_OK,self.OnOk)
-        wx.EVT_BUTTON(self,wx.ID_CANCEL,self.OnCancel)
+        self.Bind(wx.EVT_BUTTON, self.OnOk, id=wx.ID_OK)
+        self.Bind(wx.EVT_BUTTON, self.OnCancel, id=wx.ID_CANCEL)
         
         self.SetTime(value)
         self.CentreOnParent(wx.BOTH)
@@ -135,8 +133,7 @@ class TimeGetter(object):
         return format_time(value, self.Format)
     
     def __call__(self, parent, value=None):
-        dlg = GetTimeDialog(parent, self.Title, value, self.Vmin, self.Vmax, self.UseSecs,
-                            self.Msg)
+        dlg = GetTimeDialog(parent, self.Title, value, self.Vmin, self.Vmax, self.UseSecs, self.Msg)
         value = dlg.Value if dlg.ShowModal() == wx.ID_OK else None
         dlg.Destroy()
         return value

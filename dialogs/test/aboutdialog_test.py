@@ -21,7 +21,6 @@ if __name__ == '__main__':
     app = wx.App(False)     # True para capturar stderr y stdout
     app.SetAssertMode(wx.APP_ASSERT_EXCEPTION)
     
-    cw.about(None, "Acerca de Test 2", bigText, longText, (400,300), 
-             resman.Bitmap("cw_add_bookmark"))
+    cw.about(None, "Acerca de Test 2", bigText, longText, (400,300), resman.Bitmap("cw_add_bookmark"))
     
     app.MainLoop()
