@@ -1,5 +1,8 @@
 # CRISTIAN ECHEVERRÍA RABÍ
 
+import sys
+from datetime import datetime
+
 #-----------------------------------------------------------------------------------------
 
 __all__ = ['BaseData', 'RowData', 'ObjData']
@@ -18,23 +21,21 @@ def getAttrRec(obj, attr):
 
 class CompareAttr(object):
     
-    def __init__(self, attr):
+    def __init__(self, typ, attr):
+        self.default = ""
+        if typ == "number":
+            self.default = -sys.maxsize
+        if typ == "datetime":
+            self.default = datetime(1,1,1)
         self.attr = attr
     
     def getValue(self, obj):
         return getAttrRec(obj, self.attr)
     
-    def __call__(self, x, y):
+    def __call__(self, x):
         vx = self.getValue(x)
-        vy = self.getValue(y)
-        if (vx is None) and (vy is None):
-            return 0
-        elif (vx is None) and not(vy is None):
-            return -1
-        elif not(vx is None) and (vy is None):
-            return 1
-        else:
-            return cmp(vx, vy)
+        if vx is None: return self.default
+        return vx
 
 
 class CompareCol(CompareAttr):
@@ -82,7 +83,7 @@ class RowData(list):
         return header.toString(value)
     
     def sortByHeader(self, header):
-        self.sort(CompareCol(header.pos))
+        self.sort(key=CompareCol(header.typ, header.pos))
 
 #-----------------------------------------------------------------------------------------
 
@@ -93,4 +94,4 @@ class ObjData(RowData):
         return getAttrRec(self[row], header.attr)
     
     def sortByHeader(self, header):
-        self.sort(CompareAttr(header.attr))
+        self.sort(key=CompareAttr(header.typ, header.attr))

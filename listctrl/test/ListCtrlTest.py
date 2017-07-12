@@ -17,7 +17,7 @@ h1 = [lc.Text("A"), lc.Text("B"), lc.Text("C"), lc.Text("D")]
 # RowDataModel
 dat2 = [[x,2,3] for x in range(20)]
 dat2.append([None,4,5])
-h2 = [lc.Text("Hola"), lc.Text("Chao"), lc.Text("Ok")]
+h2 = [lc.Number("Hola"), lc.Number("Chao"), lc.Number("Ok")]
 
 
 # ObjDataModel
