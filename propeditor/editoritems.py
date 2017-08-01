@@ -51,10 +51,7 @@ class Item(object):
     def GetText(self, obj):
         value = self.GetValue(obj)
         return self.Getter.GetText(value)
-    
-    #-------------------------------------------------------------------------------------
-    # Properties methods
-    
+       
     def GetValue(self, obj):
         objAttr  = _get_last_instance(obj, self.Attr)
         attr = self.Attr.split(".")[-1]
@@ -65,13 +62,9 @@ class Item(object):
         attr = self.Attr.split(".")[-1]
         setattr(objAttr, attr, value)
     
-    def _getIsItem(self):
+    @property
+    def IsItem(self):
         return True
-    
-    #-------------------------------------------------------------------------------------
-    # Properties
-    
-    IsItem = property(_getIsItem)
 
 
 #-----------------------------------------------------------------------------------------

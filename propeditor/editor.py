@@ -2,7 +2,7 @@
 
 import wx
 import wx.lib.newevent
-import wx.dataview as dataview
+#import wx.dataview as dv
 
 #-----------------------------------------------------------------------------------------
 
@@ -21,10 +21,12 @@ class _NodeData(object):
 
 myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
-PREDIT_DEF_STYLE = (wx.TR_DEFAULT_STYLE | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
-                    wx.TR_HIDE_ROOT | wx.TR_ROW_LINES) # dataview.TR_COLUMN_LINES
+#PREDIT_DEF_STYLE = dv.TL_DEFAULT_STYLE # | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
+#                    #wx.TR_HIDE_ROOT | wx.TR_ROW_LINES) # dataview.TR_COLUMN_LINES
+PREDIT_DEF_STYLE = wx.LC_REPORT | wx.LC_VRULES
 
-class Editor(dataview.TreeListCtrl):
+
+class Editor(wx.ListCtrl):
     """ Widget to display and edit properties
     
     Public attributtes
@@ -55,7 +57,7 @@ class Editor(dataview.TreeListCtrl):
         style     : Default to PREDIT_DEF_STYLE
         """
         
-        dataview.TreeListCtrl.__init__(self, parent, -1, size=size, style=style)
+        wx.ListCtrl.__init__(self, parent, -1, size=size, style=style)
         
         self.FmtGroup  = ("BLACK", "LIGHT BLUE", True)
         self.FmtItem   = ("BLACK", "WHITE", False)
@@ -63,16 +65,16 @@ class Editor(dataview.TreeListCtrl):
         
         self._msgBox = None
         
-        self.AppendColumn(colnames[0], colswidth[0], wx.ALIGN_LEFT)
-        self.AppendColumn(colnames[1], colswidth[1], wx.ALIGN_RIGHT)
-        self.AppendColumn(colnames[2], colswidth[2], wx.ALIGN_CENTER)
+        self.AppendColumn(colnames[0], wx.LIST_FORMAT_LEFT,   colswidth[0])
+        self.AppendColumn(colnames[1], wx.LIST_FORMAT_RIGHT,  colswidth[1])
+        self.AppendColumn(colnames[2], wx.LIST_FORMAT_CENTER, colswidth[2])
         #self.SetMainColumn(0)
         
-        self.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnItemActivated)
-        self.Bind(wx.EVT_TREE_SEL_CHANGING, self.OnItemSelected)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         
         self.Data = data
-        self.Obj  = obj
+        #self.Obj  = obj
 
     #-------------------------------------------------------------------------------------
     # Events
@@ -87,7 +89,7 @@ class Editor(dataview.TreeListCtrl):
             return
         
         n = event.GetItem()
-        nodeData = self.GetPyData(n)
+        nodeData = self.GetData(n)
         if nodeData is None:
             return
         self._updateMsgBox(nodeData.Item)
@@ -114,7 +116,7 @@ class Editor(dataview.TreeListCtrl):
         self.EditNode(node)
 
     def EditNode(self, node):
-        nodeData = self.GetPyData(node)
+        nodeData = self.GetData(node)
         item = nodeData.Item
         
         if not item.IsItem:
@@ -172,14 +174,22 @@ class Editor(dataview.TreeListCtrl):
     #-------------------------------------------------------------------------------------
     # Private methos
 
-    def _addNode(self, node, group):
+    def _addNode(self, group):
         for i in group:
-            n = self.AppendItem(node, i.Name)
-            self.SetItemText(n, 2, i.Unit)
-            self.SetItemData(n, _NodeData(i))
-            self._nodeDict[id(i)] = n
+            #n = self.AppendItem(node, i.Name)
+            n = self.InsertItem(self.GetItemCount(), i.Name)
+            self.SetItem(n, 2, i.Unit)
+            #self.SetItemData(n, _NodeData(i))
+            fg, bg, bold = self.FmtItem
+            #self.SetItemText(n, 2, i.Unit)
+            #self.SetItemData(n, _NodeData(i))
+            #self._nodeDict[id(i)] = n
             if not i.IsItem:
-                self._addNode(n, i)
+                fg, bg, bold = self.FmtGroup
+                self._addNode(i)
+            self.SetItemTextColour(n, fg)
+            self.SetItemBackgroundColour(n, bg)
+            #self.SetItemBold(n, bold)
     
     def _updateMsgBox(self, i): 
         if self._msgBox is None:
@@ -190,39 +200,37 @@ class Editor(dataview.TreeListCtrl):
     #-------------------------------------------------------------------------------------
     # Properties methods
     
-    def _getData(self):
+    @property
+    def Data(self):
         return self._data
     
-    def _setData(self, value):
+    @Data.setter
+    def Data(self, value):
         self.DeleteAllItems()
         
         self._data = value
-        self._nodeDict = {} # relaciona items in EditorData con nodos
+        #self._nodeDict = {} # relaciona items in EditorData con nodos
         
         #root = self.AddRoot(self._data.Name)
-        root = self.AppendItem(self.GetRootItem(), self._data.Name)
-        self._nodeDict[id(self._data)] = root
+        #root = self.AppendItem(self.GetRootItem(), self._data.Name)
+        #self._nodeDict[id(self._data)] = root
         
-        self._addNode(root, self._data)
-        self.UpdateFormats()
-        self.Expand(root)
+        self._addNode(self._data)
+        #self.UpdateFormats()
+        #self.Expand(root)
     
-    def _getObj(self):
+    @property
+    def Obj(self):
         return self._obj
     
-    def _setObj(self, value):
+    @Obj.setter
+    def Obj(self, value):
         if value is None:
             self._obj = self._data.CreateObj()
         else:
             self._obj = value
         self.UpdateValues()
-        
+
     def _setMsgBox(self, value):
         self._msgBox = value
-    
-    #-------------------------------------------------------------------------------------
-    # Properties
-    
-    Data   = property(_getData, _setData)
-    Obj    = property(_getObj,  _setObj)
-    MsgBox = property(None,     _setMsgBox)
+    MsgBox = property(None, _setMsgBox)
