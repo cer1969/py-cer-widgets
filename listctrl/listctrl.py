@@ -97,25 +97,27 @@ class ListCtrl(wx.ListCtrl):
     #-------------------------------------------------------------------------------------
     # Propiedad data
     
-    def _getData(self):
+    @property
+    def data(self):
         return self._data
     
-    def _setData(self, value):
+    @data.setter
+    def data(self, value):
         self._data = value
         self._currentSort = None
         self.SortByCol()
         evt = myEvent(idx=self.GetId(), ctrl=self)
         self.GetEventHandler().ProcessEvent(evt)
     
-    data = property(_getData, _setData)
-    
     #-------------------------------------------------------------------------------------
     # Propiedad selection y eventos asociados
     
-    def _getSelection(self):
+    @property
+    def selection(self):
         return self._selected
     
-    def _setSelection(self,item=None):
+    @selection.setter
+    def selection(self,item=None):
         if not(item is None):
             if len(self._data) > item:
                 self.SetItemState(item, wx.LIST_STATE_SELECTED,#|wx.LIST_STATE_FOCUSED,
@@ -125,18 +127,15 @@ class ListCtrl(wx.ListCtrl):
                 item = None
         self._selected = item
     
-    selection = property(_getSelection, _setSelection)
-    
     #-------------------------------------------------------------------------------------
     # Propiedad selectedItem
     
-    def _getSelectedItem(self):
+    @property
+    def selectedItem(self):
         if self._selected is None:
             return None
         else:
             return self._data[self._selected]
-    
-    selectedItem = property(_getSelectedItem)
     
     #-------------------------------------------------------------------------------------
     # Eventos 

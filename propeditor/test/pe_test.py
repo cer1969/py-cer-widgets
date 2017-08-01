@@ -44,7 +44,7 @@ def getSiNo(value):
 data1 = pe.EditorData(
     pe.Text("nombre", msg="Nombre completo"),
     pe.Float("edad", msg=u"Edad en años"),
-    pe.Float("peso", vmin=0, msg=u"Peso del empleado en kilos"),
+    pe.Float("peso", vmin=0, msg=u"Peso del empleado en kilos", unit="Kg"),
     pe.Choice("deporte", ["Futbol","Tenis","Voleiball","Otras"], msg="Actividad Extra-programatica"),
     pe.EditorGroup("Cuenta Bancaria", u"Datos cuenta banco",
         pe.Text("cuenta.banco", u"Cuenta", msg=u"Nombre del Banco"),
@@ -69,7 +69,7 @@ class MainFrame(wx.Frame):
         
         txt = cw.TipBox(p, size=(-1,100), showValue=True)
         
-        plc1 = pe.Editor(p, data1, yo, colswidth=(150, 130, 0))#, style=cw.PREDIT_DEF_STYLE|wx.TR_TWIST_BUTTONS)
+        plc1 = pe.Editor(p, data1, yo, colswidth=(150, 130, 100))#, style=cw.PREDIT_DEF_STYLE|wx.TR_TWIST_BUTTONS)
         plc1.MsgBox = txt
         
         box.Add(plc1, 1, wx.EXPAND|wx.ALL, 5)

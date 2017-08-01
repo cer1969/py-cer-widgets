@@ -66,23 +66,21 @@ class EditorGroup(list):
         return BaseObj(self.GetAttrList())
     
     #-------------------------------------------------------------------------------------
-    # Properties methods
+    # Properties
     
-    def _getEdit(self):
+    @property
+    def Edit(self):
         return None
     
-    def _setEdit(self, value=True):
+    @Edit.setter
+    def Edit(self, value=True):
         for i in self:
             i.Edit = value
     
-    def _getIsItem(self):
+    @property
+    def IsItem(self):
         return False
-    
-    #-------------------------------------------------------------------------------------
-    # Properties
-    
-    Edit   = property(_getEdit, _setEdit)
-    IsItem = property(_getIsItem)
+
 
 #-----------------------------------------------------------------------------------------
 
