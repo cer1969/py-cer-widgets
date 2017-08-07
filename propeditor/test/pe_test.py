@@ -42,20 +42,21 @@ def getSiNo(value):
 #-----------------------------------------------------------------------------------------
 
 data1 = pe.EditorData(
+    pe.Group("Generales", msg="Datos Generales"),
     pe.Text("nombre", msg="Nombre completo"),
-    pe.Float("edad", msg=u"Edad en años"),
+    pe.Float("edad", msg=u"Edad en años", unit="Años"),
     pe.Float("peso", vmin=0, msg=u"Peso del empleado en kilos", unit="Kg"),
     pe.Choice("deporte", ["Futbol","Tenis","Voleiball","Otras"], msg="Actividad Extra-programatica"),
-    pe.EditorGroup("Cuenta Bancaria", u"Datos cuenta banco",
-        pe.Text("cuenta.banco", u"Cuenta", msg=u"Nombre del Banco"),
-        pe.Int("cuenta.numero", u"N°", msg=u"N° de cuenta")
-    ),
-    pe.EditorGroup("Curso", u"Ejemplo de como seleccionar de una lista de objetos\n y mostrar detalles",
-        pe.Choice("curso", [yo.curso, curso2, curso3], "Nombre", getText=cw.GetTextAttrFunc("nombre"), msg="Selecione curso"),
-        pe.Int("curso.alumnos", u"N° alumnos", msg=u"N° de alumnos", edit=False)
-    ),
-    pe.Switch("casado", [1,2], getText=getSiNo)
+    pe.Switch("casado", [1,2], getText=getSiNo),
+    pe.Group("Cuenta Bancaria", msg="Datos cuenta banco"),
+    pe.Text("cuenta.banco", u"Cuenta", msg=u"Nombre del Banco"),
+    pe.Int("cuenta.numero", u"N°", msg=u"N° de cuenta"),
+    pe.Group("Curso", msg="Ejemplo de como seleccionar de una lista de objetos y mostrar detalles"),
+    pe.Choice("curso", [yo.curso, curso2, curso3], "Nombre", getText=cw.GetTextAttrFunc("nombre"), msg="Selecione curso"),
+    pe.Int("curso.alumnos", u"N° alumnos", msg=u"N° de alumnos", edit=False)
 )
+
+#data1.Edit = False
 
 #-----------------------------------------------------------------------------------------
 
