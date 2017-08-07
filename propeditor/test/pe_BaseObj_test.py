@@ -10,11 +10,10 @@ import datetime
 data1 = pe.EditorData(
     pe.Text("nombre", msg="Nombre completo"),
     pe.Text("empresa", msg=u"Razón social de la empresa"),
-    pe.EditorGroup("Medidas", u"Características físicas generales",
-        pe.Float("altura", format="%.3f", msg="Altura del empleado en metros"),
-        pe.Float("peso", "Peso", msg="Peso del empleado en kilos"),
-        pe.Int("edad", vmin=30, vmax=90, msg=u"Edad en años")
-    ),
+    pe.Group("Medidas", u"Características físicas generales"),
+    pe.Float("altura", format="%.3f", msg="Altura del empleado en metros"),
+    pe.Float("peso", "Peso", msg="Peso del empleado en kilos"),
+    pe.Int("edad", vmin=30, vmax=90, msg=u"Edad en años"),
     pe.Text("mensaje", ctrlSize=(250,130), ctrlStyle=wx.TE_MULTILINE, msg=u"Mensaje corto"),
     pe.DateTime("feh", "Fecha y Hora")
 )
@@ -36,20 +35,16 @@ personas = [Persona(x) for x in ["Pedro", "Juan", "Diego", "Lucas"]]
 
 
 data2 = pe.EditorData(
-    pe.EditorGroup("Fecha", u"Dato de pruba",
-        pe.Time("inicio", format="%H:%M:%S", vmin=datetime.time(8,30,0),
-                vmax=datetime.time(18,00,0), useSecs=True,
-                msg=u"Ingrese hora de inicio (horario hábil 8:30 - 18:00)")
+    pe.Group("Fecha", u"Dato de pruba"),
+    pe.Time("inicio", format="%H:%M:%S", vmin=datetime.time(8,30,0), vmax=datetime.time(18,00,0),
+             useSecs=True, msg=u"Ingrese hora de inicio (horario hábil 8:30 - 18:00)"
     ),
-    pe.EditorGroup("Otros", u"Otros datos",
-        pe.Date("fnac", "Fecha Nacimiento", msg="Fecha de nacimiento empleado"),
-        pe.Switch("cocina", ["Si","No","Mas o menos"], msg="Habilidades culinarias"),
-        pe.Float("peso", "Peso", edit=False, msg="Peso del empleado en kilos", unit=u"Kg."),
-        pe.Choice("actividad", ["Cantar","Futbol","Tenis","Voleiball","Otras"],
-                  msg="Actividad Extra-programatica")
-    ),
-    pe.Choice("persona", personas, getText=cw.GetTextAttrFunc("Name"), 
-              msg="Selecione objeto")
+    pe.Group("Otros", u"Otros datos"),
+    pe.Date("fnac", "Fecha Nacimiento", msg="Fecha de nacimiento empleado"),
+    pe.Switch("cocina", ["Si","No","Mas o menos"], msg="Habilidades culinarias"),
+    pe.Float("peso", "Peso", edit=False, msg="Peso del empleado en kilos", unit=u"Kg."),
+    pe.Choice("actividad", ["Cantar","Futbol","Tenis","Voleiball","Otras"], msg="Actividad Extra-programatica"),
+    pe.Choice("persona", personas, getText=cw.GetTextAttrFunc("Name"), msg="Selecione objeto")
 )
 
 obj2 = data2.CreateObj()
@@ -71,7 +66,7 @@ class MainFrame(wx.Frame):
         
         txt = cw.TipBox(p, size=(-1,100), showValue=True)
         
-        plc1 = pe.Editor(p, data1, obj1, (150, 130, 0), style=pe.PREDIT_DEF_STYLE|wx.TR_TWIST_BUTTONS)
+        plc1 = pe.Editor(p, data1, obj1, (150, 130, 0))
         plc1.MsgBox = txt
         
         plc2 = pe.Editor(p, data2, None, (150, 130, 50))
@@ -98,9 +93,8 @@ class MainFrame(wx.Frame):
         print("Cambia valor de la propiedad %s" % name)
         print(ctrl.Obj)
         if name == "Peso":
-            ctrl.SetEdit(ctrl.Data[2][1], False)
-            #ctrl.SetEdit(ctrl.Data[2], False)
-            print(ctrl.Data[2][1].Edit)
+            ctrl.SetEdit(ctrl.Data[3], False)
+            print(ctrl.Data[3].Name)
             ctrl.UpdateFormats()
 
 #-----------------------------------------------------------------------------------------

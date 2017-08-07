@@ -5,8 +5,8 @@ import cer.widgets.dialogs as dlg
 
 #-----------------------------------------------------------------------------------------
 
-__all__ = ['Item', 'DataItem', 'Text', 'Float', 'Int', 'DateTime', 'Date', 'Time',
-           'Switch', 'Choice']
+__all__ = ['Group', 'Item', 'DataItem', 'Text', 'Float', 'Int', 'DateTime', 'Date', 
+           'Time', 'Switch', 'Choice']
 
 #-----------------------------------------------------------------------------------------
 
@@ -19,7 +19,40 @@ def _get_last_instance(obj, attr):
 
 #-----------------------------------------------------------------------------------------
 
-class Item(object):
+class Group(object):
+    """Header to separate items
+    
+    Public attributtes
+    Name   : Name to display
+    Msg    : Help message to display
+    Unit   : Text for unit
+    
+    Read-only properties
+    IsItem : False
+    Edit   : False
+    
+    """
+    
+    __slots__ = ('Name', 'Msg', 'Unit', '_isitem', '_edit')
+    
+    def __init__(self, name, msg="", unit=""):
+        self.Name = name
+        self.Msg = msg
+        self.Unit = unit
+        self._isitem = False
+        self._edit = False
+    
+    @property
+    def IsItem(self):
+        return self._isitem
+
+    @property
+    def Edit(self):
+        return self._edit
+
+#-----------------------------------------------------------------------------------------
+
+class Item(Group):
     """Item for EditorData
     
     Public attributtes
@@ -35,15 +68,16 @@ class Item(object):
     
     """
     
-    __slots__ = ('Attr', 'Getter', 'Name', 'Edit', 'Msg', 'Unit')
+    __slots__ = ('Attr', 'Getter')
     
     def __init__(self, attr, getter, name=None, edit=True, msg="", unit=""):
+        _name = attr if name is None else name
+        Group.__init__(self, _name, msg, unit)
+
         self.Attr = attr
         self.Getter = getter
-        self.Name = attr if name is None else name
-        self.Edit = edit
-        self.Msg = msg
-        self.Unit = unit
+        self._isitem = True
+        self._edit = edit
     
     #-------------------------------------------------------------------------------------
     # Public methods
@@ -63,8 +97,12 @@ class Item(object):
         setattr(objAttr, attr, value)
     
     @property
-    def IsItem(self):
-        return True
+    def Edit(self):
+        return self._edit
+
+    @Edit.setter
+    def Edit(self, v):
+        self._edit = v
 
 
 #-----------------------------------------------------------------------------------------

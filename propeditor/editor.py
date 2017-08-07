@@ -2,7 +2,6 @@
 
 import wx
 import wx.lib.newevent
-#import wx.dataview as dv
 
 #-----------------------------------------------------------------------------------------
 
@@ -21,8 +20,6 @@ class _NodeData(object):
 
 myEvent, EVTC_PREDIT_VALCHANGE = wx.lib.newevent.NewEvent()
 
-#PREDIT_DEF_STYLE = dv.TL_DEFAULT_STYLE # | wx.TR_NO_LINES | wx.TR_FULL_ROW_HIGHLIGHT|
-#                    #wx.TR_HIDE_ROOT | wx.TR_ROW_LINES) # dataview.TR_COLUMN_LINES
 PREDIT_DEF_STYLE = wx.LC_REPORT | wx.LC_VRULES
 
 
@@ -68,60 +65,46 @@ class Editor(wx.ListCtrl):
         self.AppendColumn(colnames[0], wx.LIST_FORMAT_LEFT,   colswidth[0])
         self.AppendColumn(colnames[1], wx.LIST_FORMAT_RIGHT,  colswidth[1])
         self.AppendColumn(colnames[2], wx.LIST_FORMAT_CENTER, colswidth[2])
-        #self.SetMainColumn(0)
         
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
         
         self.Data = data
-        #self.Obj  = obj
+        self.Obj  = obj
 
     #-------------------------------------------------------------------------------------
     # Events
     
     def OnItemActivated(self, event):
-        n = event.GetItem()
-        self.EditNode(n)
+        n = event.GetIndex()
+        item = self._data[n]
+        self.EditItem(item)
         event.Skip()
     
     def OnItemSelected(self, event):
         if self._msgBox is None:
             return
-        
-        n = event.GetItem()
-        nodeData = self.GetData(n)
-        if nodeData is None:
-            return
-        self._updateMsgBox(nodeData.Item)
+        n = event.GetIndex()
+        item = self._data[n]
+        self._updateMsgBox(item)
         event.Skip()
     
     #-------------------------------------------------------------------------------------
     # Public methods
     
-    def GetNode(self, item):
-        return self._nodeDict[id(item)]
-    
     def SetEdit(self, item, edit):
-        node = self.GetNode(item)
-        nodeData = self.GetPyData(node)
-        if nodeData.Item.IsItem:
-            nodeData.Edit = edit
-        else:
-            for i in nodeData.Item:
-                self.SetEdit(i, edit)
-        self.UpdateFormats(item)
+        if item.IsItem:
+            item.Edit = edit
+        self.UpdateFormat(item)
     
-    def Edit(self, item):
-        node = self.GetNode(item)
-        self.EditNode(node)
+    #def Edit(self, item):
+    #    node = self.GetNode(item)
+    #    self.EditNode(node)
 
-    def EditNode(self, node):
-        nodeData = self.GetData(node)
-        item = nodeData.Item
-        
+    def EditItem(self, item):
         if not item.IsItem:
             return
-        if not nodeData.Edit:
+        if not item.Edit:
             return
         
         cur_value = item.GetValue(self._obj)
@@ -131,65 +114,46 @@ class Editor(wx.ListCtrl):
         if new_value == cur_value:
             return
         item.SetValue(self._obj, new_value)
-        self.UpdateValues(item, setEvent=True)
+        self.UpdateValue(item, setEvent=True)
         self._updateMsgBox(item)
     
     def UpdateView(self):
         self.UpdateValues()
         self.UpdateFormats()
-        
-    def UpdateFormats(self, item=None):
-        if item is None:
-            item = self._data
-        
-        node = self.GetNode(item)
-        
+
+    def UpdateFormats(self):
+        for item in self._data:
+            self.UpdateFormat(item)
+    
+    def UpdateFormat(self, item):
+        attr = self.FmtGroup
         if item.IsItem:
-            nodeAttr = self.GetItemData(node)
-            attr = self.FmtItem if nodeAttr.Edit else self.FmtNoEdit
-        else:
-            attr = self.FmtGroup
-            for i in item:
-                self.UpdateFormats(i)
+            attr = self.FmtItem if item.Edit else self.FmtNoEdit
         
         fg, bg, bold = attr
-        #self.SetItemTextColour(node, fg)
-        #self.SetItemBackgroundColour(node, bg)
-        #self.SetItemBold(node, bold)
-    
-    def UpdateValues(self, item=None, setEvent=False):
-        if item is None:
-            item = self._data
         
+        n = self._data.index(item)
+
+        self.SetItemTextColour(n, fg)
+        self.SetItemBackgroundColour(n, bg)
+        if bold:
+            f = self.GetItemFont(n)
+            self.SetItemFont(n, f.Bold())
+    
+    def UpdateValues(self, setEvent=False):
+        for item in self._data:
+            self.UpdateValue(item, setEvent)
+    
+    def UpdateValue(self, item, setEvent=False):
         if item.IsItem:
-            n = self.GetNode(item)
-            self.SetItemText(n, 1, item.GetText(self._obj))
+            n = self._data.index(item)
+            self.SetItem(n, 1, item.GetText(self._obj))
             if setEvent:
                 evt = myEvent(Id=self.GetId(), Ctrl=self, Item=item)
                 self.GetEventHandler().ProcessEvent(evt)
-        else:
-            for i in item:
-                self.UpdateValues(i, setEvent)
     
     #-------------------------------------------------------------------------------------
     # Private methos
-
-    def _addNode(self, group):
-        for i in group:
-            #n = self.AppendItem(node, i.Name)
-            n = self.InsertItem(self.GetItemCount(), i.Name)
-            self.SetItem(n, 2, i.Unit)
-            #self.SetItemData(n, _NodeData(i))
-            fg, bg, bold = self.FmtItem
-            #self.SetItemText(n, 2, i.Unit)
-            #self.SetItemData(n, _NodeData(i))
-            #self._nodeDict[id(i)] = n
-            if not i.IsItem:
-                fg, bg, bold = self.FmtGroup
-                self._addNode(i)
-            self.SetItemTextColour(n, fg)
-            self.SetItemBackgroundColour(n, bg)
-            #self.SetItemBold(n, bold)
     
     def _updateMsgBox(self, i): 
         if self._msgBox is None:
@@ -205,19 +169,15 @@ class Editor(wx.ListCtrl):
         return self._data
     
     @Data.setter
-    def Data(self, value):
+    def Data(self, data):
+        self._data = data
+
         self.DeleteAllItems()
         
-        self._data = value
-        #self._nodeDict = {} # relaciona items in EditorData con nodos
-        
-        #root = self.AddRoot(self._data.Name)
-        #root = self.AppendItem(self.GetRootItem(), self._data.Name)
-        #self._nodeDict[id(self._data)] = root
-        
-        self._addNode(self._data)
-        #self.UpdateFormats()
-        #self.Expand(root)
+        for item in data:
+            n = self.InsertItem(self.GetItemCount(), item.Name)
+            self.SetItem(n, 2, item.Unit)
+        self.UpdateFormats()
     
     @property
     def Obj(self):
