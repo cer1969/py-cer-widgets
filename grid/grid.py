@@ -47,7 +47,7 @@ class Grid(grid.Grid):
         
         self.SetSelectionBackground("LIGHT BLUE")
         self.SetSelectionForeground("BLUE")
-        self.SetSelectionMode(grid.Grid.GridSelectCells)
+        self.SetSelectionMode(grid.Grid.SelectCells)
         
         self.Bind(grid.EVT_GRID_CELL_LEFT_DCLICK, self.OnLeftDClick)
         self.Bind(wx.EVT_KEY_DOWN, self.OnKeyDown)
