@@ -127,7 +127,7 @@ class MainFrame(wx.Frame):
         #self.OnSize()
         #wx.FutureCall(2000, self.ShowMessage) # se puede pasar args
         
-        print("Inicio: %f" % time.clock())
+        print("Inicio: %f" % time.time())
 
     def OnSize(self, event=None):
         s = min(self.ClientSize)

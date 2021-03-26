@@ -90,7 +90,7 @@ class Command(object):
                 tb.AddRadioTool(self.Id, "", im, shortHelp=self.Text, longHelp=self.Help)
             else:
                 #tb.AddLabelTool(self.Id, self.Text, im, shortHelp=self.Text, longHelp=self.Help)
-                tb.AddTool(self.Id, self.Text, im, im, shortHelpString=self.Text, longHelpString=self.Help)
+                tb.AddTool(self.Id, self.Text, im, im, CMD_ITEM, shortHelp=self.Text, longHelp=self.Help)
 
 #-----------------------------------------------------------------------------------------
 

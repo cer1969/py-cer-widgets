@@ -8,8 +8,8 @@ from cer.widgets.resource.rxnuvola import resman
 
 bigText  = " Programa de prueba (R)"
 longText = ('\n\n'
-            ' H.Q.I TRANSELEC CHILE S.A.\n'
-            ' Administración Regional Coquimbo\n'
+            ' TALLER LANA CHILE\n'
+            ' Gerencia General\n'
             ' Cristian Echeverría Rabí (R)\n'
             ' Versión experimental\n'
             ' En caso de problemas revisar archivo "errores.txt"\n'
